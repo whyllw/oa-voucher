@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.OemSelectGrantCarMakeMappingMapper">
+    <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.OemSelectGrantCarMakeMapping">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="fk_select_grant_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="make_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="make_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="make_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, fk_select_grant_id, make_id, make_name, make_code, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from oem_select_grant_car_make_mapping
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oem_select_grant_car_make_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemSelectGrantCarMakeMapping" useGeneratedKeys="true">
+    insert into oem_select_grant_car_make_mapping (fk_select_grant_id, make_id, make_name,
+      make_code, create_time, update_time
+      )
+    values (#{fkSelectGrantId,jdbcType=INTEGER}, #{makeId,jdbcType=INTEGER}, #{makeName,jdbcType=VARCHAR},
+      #{makeCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemSelectGrantCarMakeMapping" useGeneratedKeys="true">
+        insert into oem_select_grant_car_make_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fkSelectGrantId != null">
+                fk_select_grant_id,
+            </if>
+            <if test="makeId != null">
+                make_id,
+            </if>
+            <if test="makeName != null">
+                make_name,
+            </if>
+            <if test="makeCode != null">
+                make_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fkSelectGrantId != null">
+                #{fkSelectGrantId,jdbcType=INTEGER},
+            </if>
+            <if test="makeId != null">
+                #{makeId,jdbcType=INTEGER},
+            </if>
+            <if test="makeName != null">
+                #{makeName,jdbcType=VARCHAR},
+            </if>
+            <if test="makeCode != null">
+                #{makeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.OemSelectGrantCarMakeMapping">
+        update oem_select_grant_car_make_mapping
+        <set>
+            <if test="fkSelectGrantId != null">
+                fk_select_grant_id = #{fkSelectGrantId,jdbcType=INTEGER},
+            </if>
+            <if test="makeId != null">
+                make_id = #{makeId,jdbcType=INTEGER},
+            </if>
+            <if test="makeName != null">
+                make_name = #{makeName,jdbcType=VARCHAR},
+            </if>
+            <if test="makeCode != null">
+                make_code = #{makeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.OemSelectGrantCarMakeMapping">
+    update oem_select_grant_car_make_mapping
+    set fk_select_grant_id = #{fkSelectGrantId,jdbcType=INTEGER},
+      make_id = #{makeId,jdbcType=INTEGER},
+      make_name = #{makeName,jdbcType=VARCHAR},
+      make_code = #{makeCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

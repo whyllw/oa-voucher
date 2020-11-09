@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssOemVoucherBatchSelectTriggerMappingMapper">
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT
+	        COUNT(1)
+        FROM
+	        oem_voucher_batch_select_trigger_mapping m
+        INNER JOIN oem_voucher_select_grant_trigger t ON m.fk_select_grant_id = t.id
+        WHERE
+	        t.deleted = #{deleted}
+        AND m.fk_batch_id = #{batchId}
+    </select>
+    <select id="selectTriggerByBatchId" resultType="java.util.Map">
+        SELECT
+	        m.fk_batch_id as batchId,
+            t.id as grantTypeId,
+            4 as grantType,
+            t.grant_limit_per_time as grantLimitPerTime,
+            0 as grantTimesLimit
+        FROM
+	        oem_voucher_batch_select_trigger_mapping m
+        INNER JOIN oem_voucher_select_grant_trigger t ON m.fk_select_grant_id = t.id
+        WHERE
+	        t.deleted = 0 and t.active = 1
+            AND m.fk_batch_id = #{batchId}
+    </select>
+    <select id="queryBatchId" resultType="java.util.Map">
+        SELECT
+        t.id as grantTypeId,
+        4 as grantType,
+        t.grant_limit_per_time AS grantLimitPerTime,
+        null AS grantTimesLimit,
+        b.id as batchId,
+        b.voucher_template_id AS generateId,
+        DATE_FORMAT(b.redeem_start_time,'%Y-%m-%d %H:%i:%s') AS startTime,
+        DATE_FORMAT(b.redeem_end_time,'%Y-%m-%d %H:%i:%s') AS endTime,
+        b.business_type AS businessType,
+        b.business_type_option as businessTypeOption,
+        b.expiry_date_type AS expiryDateType,
+        b.valid_for_number_of_days AS validForNumberOfDays,
+        b.voucher_name AS voucherName,
+        b.redeem_value AS redeemValue,
+        b.usage_rule AS usageRule,
+        b.voucher_type AS voucherType,
+        b.minimum_spend_amount AS minimumSpendAmount
+        FROM
+        oem_voucher_select_grant_trigger t
+        LEFT JOIN oem_select_grant_car_number_mapping n ON t.id = n.fk_select_grant_id
+        LEFT JOIN oem_select_grant_car_make_mapping m ON t.id = m.fk_select_grant_id
+        LEFT JOIN oem_voucher_batch_select_trigger_mapping s ON t.id = s.fk_select_grant_id
+        LEFT JOIN oem_voucher_batch_select_trigger_mapping tm ON t.id=tm.fk_select_grant_id
+        LEFT JOIN voucher_batch b ON tm.fk_batch_id=b.id
+        <where>
+            b.`status`= #{status} and t.vehicle_binding_status = #{bindingStatus}
+            AND (m.make_name is null or m.make_name = #{c.seriesName})
+            AND (n.car_number is null or n.car_number = #{c.simpleVehicleNumber})
+            AND <![CDATA[(t.vehicle_sale_start_date is null or t.vehicle_sale_start_date <= #{c.saleDate})]]>
+            AND <![CDATA[(t.vehicle_sale_end_date is null or t.vehicle_sale_end_date >= #{c.saleDate})]]>
+            AND <![CDATA[(t.last_back_to_dealer_start_time is null or t.last_back_to_dealer_start_time <= #{c.lastBackStoreTime})]]>
+            AND <![CDATA[(t.last_back_dealer_end_time is null or t.last_back_dealer_end_time >= #{c.lastBackStoreTime})]]>
+            AND <![CDATA[(t.last_back_dealer_mileage_min is null or t.last_back_dealer_mileage_min <= #{c.lastBackStoreMileage}) ]]>
+            AND <![CDATA[(t.last_back_dealer_mileage_max is null or t.last_back_dealer_mileage_max >= #{c.lastBackStoreMileage}) ]]>
+        </where>
+        group by b.id
+    </select>
+    <select id="queryBatchIdByNotBindingCar" resultType="java.util.Map">
+        SELECT
+        t.id as grantTypeId,
+        4 as grantType,
+        t.grant_limit_per_time AS grantLimitPerTime,
+        null AS grantTimesLimit,
+        b.id as batchId,
+        b.voucher_template_id AS generateId,
+        DATE_FORMAT(b.redeem_start_time,'%Y-%m-%d %H:%i:%s') AS startTime,
+        DATE_FORMAT(b.redeem_end_time,'%Y-%m-%d %H:%i:%s') AS endTime,
+        b.business_type AS businessType,
+        b.business_type_option as businessTypeOption,
+        b.expiry_date_type AS expiryDateType,
+        b.valid_for_number_of_days AS validForNumberOfDays,
+        b.voucher_name AS voucherName,
+        b.redeem_value AS redeemValue,
+        b.usage_rule AS usageRule,
+        b.voucher_type AS voucherType,
+        b.minimum_spend_amount AS minimumSpendAmount
+        FROM
+        oem_voucher_select_grant_trigger t
+        LEFT JOIN oem_select_grant_car_number_mapping n ON t.id = n.fk_select_grant_id
+        LEFT JOIN oem_select_grant_car_make_mapping m ON t.id = m.fk_select_grant_id
+        LEFT JOIN oem_voucher_batch_select_trigger_mapping s ON t.id = s.fk_select_grant_id
+        LEFT JOIN oem_voucher_batch_select_trigger_mapping tm ON t.id=tm.fk_select_grant_id
+        LEFT JOIN voucher_batch b ON tm.fk_batch_id=b.id
+        <where>
+            b.`status`= #{status} and t.vehicle_binding_status = #{bindingStatus}
+        </where>
+        group by b.id
+    </select>
+</mapper>

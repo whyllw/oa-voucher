@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssEtlUserVehicleMappingMapper">
+    <select id="selectUsersForGrantingVoucherByParams" resultMap="com.fawvw.ms.voucher.basedao.mapper.EtlUserVehicleMappingMapper.BaseResultMap">
+        select
+        <if test="conf.userType != null">
+            and vehicle_binding_status = #{conf.userType}
+        </if>
+        from etl_user_vehicle_mapping
+        where 1=1
+        <if test="conf.makeId != null">
+            and make_id = #{conf.makeId}
+        </if>
+        <if test="conf.vehicleNo != null">
+            and car_number like concat('%',#{conf.vehicleNo,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.saleStartTime != null and conf.saleEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(vehicle_sale_date) >= #{conf.saleStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(vehicle_sale_date) <= #{conf.saleEndTime} ]]>
+        </if>
+        <if test="conf.lastBackStartTime != null and conf.lastBackEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(last_back_store_time) >= #{conf.lastBackStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(last_back_store_time) <= #{conf.lastBackEndTime} ]]>
+        </if>
+        <if test="conf.mileageMin != null and conf.mileageMax != null">
+            and <![CDATA[ last_back_store_mileage >= #{conf.mileageMin} ]]>
+            and <![CDATA[ last_back_store_mileage <= #{conf.mileageMax} ]]>
+        </if>
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.EtlUserVehicleMappingMapper.Base_Column_List" />
+    </select>
+    <select id="selectByAid" parameterType="java.lang.Integer" resultMap="com.fawvw.ms.voucher.basedao.mapper.EtlUserVehicleMappingMapper.BaseResultMap">
+        select
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.EtlUserVehicleMappingMapper.Base_Column_List" />
+        from etl_user_vehicle_mapping
+        where aid_ref = #{refId}
+    </select>
+</mapper>

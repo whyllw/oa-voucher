@@ -1,0 +1,167 @@
+spring:
+  datasource:
+    etl:
+      url: jdbc:mysql://192.168.174.14:33307/etl_oneapp?allowMultiQueries=true
+      username: tima
+      password: tima@fawvw123456
+      driver-class-name: com.mysql.jdbc.Driver
+      name: dbmaster
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxWait: 10000
+      max-active: 100
+      max-idle: 20
+      initial-size: 10
+      connectionInitSqls: set names utf8mb4
+    oneapp:
+      url: jdbc:mysql://10.20.4.16:3306/one-app-dev?allowMultiQueries=true
+      username: faw_oa_dev
+      password: 2pOlw7aZ#WhU5MAR90kC
+      driver-class-name: com.mysql.jdbc.Driver
+      name: dbmaster
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxWait: 10000
+      max-active: 100
+      max-idle: 20
+      initial-size: 10
+      connectionInitSqls: set names utf8mb4
+  #redis
+  redis:
+    password: Redis@R123
+    port: 6379
+    host: 10.20.4.6
+    connectionPoolSize: 128
+    subscriptionConnectionPoolSize: 100
+    hosts[0]:
+      ip: 127.0.0.1
+      port: 6379
+    hosts[1]:
+      ip: 127.0.0.1
+      port: 6380
+    hosts[2]:
+      ip: 127.0.0.1
+      port: 6381
+    #mode: single|sentinel
+    mode: single
+    master: masterName
+  cloud:
+    consul:
+      config:
+        # 指定consul配置的文件夹前缀为config
+        prefix: config
+        #指定consul配置的配置文件父路径
+        default-context: ${spring.application.name}
+        # 指定consul配置的配置文件为configuration
+        data-key: data
+        # 指定consul配置的配置文件格式properties（maven），gradle为（YAML）
+        format: YAML
+        #profile-separator 默认为  ","
+        #profile-separator:
+      discovery:
+        tags: manage
+        default-query-tag: manage
+  # mongodb
+  data:
+    mongodb:
+      host:  10.20.1.8
+      port: 27017
+      database: etl-one-app
+
+swagger:
+  enabled: true
+  group: mall
+
+
+tsf:
+  swagger:
+    enabled: false
+
+
+feign:
+  client:
+    cather-customers:
+      base-url: http://leads.faw-vw.com:8080/kafkaSpringMVCtest
+cdp:
+  app-key: "0665529604"
+  secret-key: 56dc47845c050f36bac9afeac56e2fdb
+  default-did: "VW_APP_Mate10 Pro_24324327928743324234_Android9.0_v1.2.0"
+  tima:
+    namespace: cdp-uat
+    api-gateway: api-gateway
+    #TODO::拆分
+    short-url: https://cdpuat.faw-vw.com/
+  runlin:
+    namespace: cdp-uat
+    api-gateway: api-gateway
+    #TODO::拆分
+    short-url: https://cdpuat.faw-vw.com/
+    #王珊特殊需求
+    special-url: https://runlinapi.faw-vw.com/
+  #用于cdp透传 前端传入的appKey在key-list中就使用对应的appKey和secretKey进行签名
+  #key-list是以appKey_secretKey为一组，按先后数组下标顺序对应：
+  #0-android 1-ios 2-社区小程序（老的）3-车主小程序 4-920小程序 5-社区小程序（新）
+  key-list: 7463135097_3c85076ebb474bed49a7dd90cffd72c7,5214621308_9ff19739c5aceac61a52eefb3fe3c55e,9128148674_476889f29da314a4c91acabb98dae74c,2985644640_83ae409e666b1e6f0649da90f1277110,3383740429_6baf074cce43c4355ce7fce85b5d6e5e,5402294258_a5bbe5bedde1b274fd265e0ff912ce2c,6382294258_e56be5bedde1b274fd265e0ff912ce2c
+
+# 优惠劵相关配置信息
+voucher:
+  card-ticket-Key: 609336761578946560
+  dms-app-key: 7225275931
+  member-app-key: 8436228063
+  app-keys: 7463135097,5214621308,0665529604,9128148674,4722332442,2985644640,5402294258,6739164328
+  export-report-task-enabled: true
+
+# kafka 配置信息
+kafka:
+  key:
+    serializer: org.apache.kafka.common.serialization.StringSerializer
+    deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  value:
+    serializer: org.apache.kafka.common.serialization.StringSerializer
+    deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  consumer:
+    servers: 10.20.4.15:9092
+    groupId: oa_medal_consumer_group_dev
+    autoCommit: false
+    timeoutMs: 60000
+    pollRecords: 100
+    offset: latest
+    topics: oa_medal_dev
+    concurrency-num: 3
+    runlin:
+      switchOn: true #默认开启
+      dealerTopic: runlin_dealer_vw
+      concurrencyNum: 3
+      bootstrapServers: 10.218.128.3:9092
+      groupId: one-app-consumer-1
+      intervalMs: 10000
+      timeoutMs: 30000
+      autoOffset: latest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-commit: false
+      pollRecords: 100
+  voucher-consumer:
+    servers: 10.218.128.3:9092
+    groupId: vouchar-consumer
+    autoCommit: false
+    timeoutMs: 60000
+    pollRecords: 100
+    offset: latest
+    topics: ticket-609336761578946560
+    concurrencyNum: 3
+
+
+#短信
+msg:
+  #业务请求携带的appkey
+  channel-app-key: 5601291711
+  #短信模板编号
+  tpl-0196: TPL_0196
+  tpl-0197: TPL_0197
+  tpl-0198: TPL_0198
+  tpl-0256: TPL_0256
+  tpl-0257: TPL_0257
+  tpl-0258: TPL_0258
+
+img:
+  message:
+    voucher-pic: https://one-app-dev-2-1256532032.piccd.myqcloud.com/31670ebf54e14694ac61b081322482b0.png

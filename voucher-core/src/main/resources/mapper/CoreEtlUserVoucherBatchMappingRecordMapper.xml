@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreEtlUserVoucherBatchMappingRecordMapper">
+    <select id="selectVoucherDetailListQueryParam" resultType="java.util.Map">
+        select
+        vd.grant_big_region_name As grantBigRegionName,
+        vd.grant_small_region_name As grantSmallRegionName,
+        vd.grant_dealer_name AS grantDealerName,
+        v.activity_name AS activityName,
+        vd.grant_dealer_code AS grantDealerCode,
+        e.user_name AS userName,
+        e.mobile AS mobile,
+        e.make_name As carMake,
+        e.vehicle_sale_date AS vehicleSaleDate,
+        e.vin AS vin,
+        e.grant_time AS drawTime,
+        e.redeem_time AS redeemTime,
+        e.redeem_end_time AS expireTime,
+        e.work_sheet_no AS workSheetNo,
+        e.redeem_code AS redeemCode,
+        e.voucher_status AS voucherStatus,
+        CASE e.voucher_status
+            WHEN 1 THEN '未领取'
+            WHEN 2 THEN '已撤回'
+            WHEN 3 THEN '已领取'
+            WHEN 4 THEN '已冻结'
+            WHEN 5 THEN '已使用'
+            WHEN 6 THEN '已过期'
+        END voucherStatusName,
+        e.redeem_big_region_name AS redeemBigRegionName,
+        e.redeem_small_region_name AS redeemSmallRegionName,
+        e.redeem_dealer_name AS redeemDealerName,
+        e.redeem_dealer_code AS redeemDealerCode,
+        e.grant_channel AS grantChannel,
+        v.single_time_limit_deduction_amount AS singleTimeLimitDeductionAmount,
+        v.batch_code AS batchCode,
+        v.voucher_name AS voucherName,
+        v.voucher_type AS voucherType,
+        v.business_type AS businessType,
+        v.redeem_value AS redeemValue,
+        v.minimum_spend_amount AS minimumSpendAmount,
+        v.id AS batchId,
+        #{conf.grantType} AS grantType,
+        #{conf.grantBusinessType} AS grantBusinessType,
+        v.thirdpart_code_type AS codeType,
+        v.thirdpart_redeem_code AS voucherCodeSignal
+        from etl_user_voucher_batch_mapping_record e
+        left join voucher_batch v on e.voucher_template_id = v.voucher_template_id
+        left join voucher_dealer_grant_record vd on e.voucher_id = vd.voucher_code_id
+        where 1=1
+        <if test="conf.voucherStatus != null">
+            and e.voucher_status = #{conf.voucherStatus}
+        </if>
+        <if test="conf.mobile != null">
+            and e.mobile = #{conf.mobile}
+        </if>
+        <if test="conf.vin != null">
+            and e.vin = #{conf.vin}
+        </if>
+        <if test="conf.redeemStartTime != null and conf.redeemEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_time) >= #{conf.redeemStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_time) <= #{conf.redeemEndTime} ]]>
+        </if>
+        <if test="conf.grantChannel != null">
+            and e.grant_channel = #{conf.grantChannel}
+        </if>
+        <if test="conf.grantDealerCode != null">
+            and vd.grant_dealer_code = #{conf.grantDealerCode}
+        </if>
+        <if test="conf.workSheetNo != null">
+            and e.work_sheet_no = #{conf.workSheetNo}
+        </if>
+        <if test="conf.expireStartTime != null and conf.expireEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_end_time) >= #{conf.expireStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_end_time) <= #{conf.expireEndTime} ]]>
+        </if>
+        <if test="conf.redeemDealerCode != null">
+            and e.redeem_dealer_code = #{conf.redeemDealerCode}
+        </if>
+        <if test="conf.redeemCode != null">
+            and e.redeem_code = #{conf.redeemCode}
+        </if>
+        <if test="conf.drawStartTime != null and conf.drawEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.grant_time) >= #{conf.drawStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.grant_time) <= #{conf.drawEndTime} ]]>
+        </if>
+        <if test="conf.grantBigRegionCode != null">
+            and vd.grant_big_region_code = #{conf.grantBigRegionCode}
+        </if>
+        <if test="conf.redeemBigRegionCode != null">
+            and e.redeem_big_region_code = #{conf.redeemBigRegionCode}
+        </if>
+        <if test="conf.grantSmallRegionName != null">
+            and vd.grant_small_region_name = #{conf.grantSmallRegionName}
+        </if>
+        <if test="conf.redeemSmallRegionName != null">
+            and e.redeem_small_region_name = #{conf.redeemSmallRegionName}
+        </if>
+        <if test="conf.activityName != null">
+            and v.activity_name = #{conf.activityName}
+        </if>
+        <if test="conf.batchId != null">
+            and v.id = #{conf.batchId}
+        </if>
+        <if test="conf.businessType != null">
+            and v.business_type = #{conf.businessType}
+        </if>
+        <if test="conf.voucherName != null">
+            and v.voucher_name like concat('%',#{conf.voucherName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.voucherType != null">
+            and v.voucher_type = #{conf.voucherType}
+        </if>
+        <if test="roleType == 1">
+            and (vd.dealer_code = #{dealerCode} or e.redeem_dealer_code = #{dealerCode})
+        </if>
+        <if test="grantBatchIds != null">
+            and v.id in
+            <foreach close=")" collection="grantBatchIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectByRedeemCode" resultMap="com.fawvw.ms.voucher.basedao.mapper.EtlUserVoucherBatchMappingRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.EtlUserVoucherBatchMappingRecordMapper.Base_Column_List"/>
+        FROM etl_user_voucher_batch_mapping_record
+        where redeem_code = #{redeemCode}
+    </select>
+    <select id="countVoucherDetailListQueryParam" resultType="java.lang.Integer">
+        select count(1)
+        from etl_user_voucher_batch_mapping_record e
+        left join voucher_batch v on e.voucher_template_id = v.voucher_template_id
+        left join voucher_dealer_grant_record vd on e.voucher_id = vd.voucher_code_id
+        where 1=1
+        <if test="conf.voucherStatus != null">
+            and e.voucher_status = #{conf.voucherStatus}
+        </if>
+        <if test="conf.mobile != null">
+            and e.mobile = #{conf.mobile}
+        </if>
+        <if test="conf.vin != null">
+            and e.vin = #{conf.vin}
+        </if>
+        <if test="conf.redeemStartTime != null and conf.redeemEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_time) >= #{conf.redeemStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_time) <= #{conf.redeemEndTime} ]]>
+        </if>
+        <if test="conf.grantChannel != null">
+            and e.grant_channel = #{conf.grantChannel}
+        </if>
+        <if test="conf.grantDealerCode != null">
+            and vd.grant_dealer_code = #{conf.grantDealerCode}
+        </if>
+        <if test="conf.workSheetNo != null">
+            and e.work_sheet_no = #{conf.workSheetNo}
+        </if>
+        <if test="conf.expireStartTime != null and conf.expireEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_end_time) >= #{conf.expireStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.redeem_end_time) <= #{conf.expireEndTime} ]]>
+        </if>
+        <if test="conf.redeemDealerCode != null">
+            and e.redeem_dealer_code = #{conf.redeemDealerCode}
+        </if>
+        <if test="conf.redeemCode != null">
+            and e.redeem_code = #{conf.redeemCode}
+        </if>
+        <if test="conf.drawStartTime != null and conf.drawEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(e.grant_time) >= #{conf.drawStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(e.grant_time) <= #{conf.drawEndTime} ]]>
+        </if>
+        <if test="conf.grantBigRegionCode != null">
+            and vd.grant_big_region_code = #{conf.grantBigRegionCode}
+        </if>
+        <if test="conf.redeemBigRegionCode != null">
+            and e.redeem_big_region_code = #{conf.redeemBigRegionCode}
+        </if>
+        <if test="conf.grantSmallRegionName != null">
+            and vd.grant_small_region_name = #{conf.grantSmallRegionName}
+        </if>
+        <if test="conf.redeemSmallRegionName != null">
+            and e.redeem_small_region_name = #{conf.redeemSmallRegionName}
+        </if>
+        <if test="conf.activityName != null">
+            and v.activity_name = #{conf.activityName}
+        </if>
+        <if test="conf.batchId != null">
+            and v.id = #{conf.batchId}
+        </if>
+        <if test="conf.businessType != null">
+            and v.business_type = #{conf.businessType}
+        </if>
+        <if test="conf.voucherName != null">
+            and v.voucher_name like concat('%',#{conf.voucherName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.voucherType != null">
+            and v.voucher_type = #{conf.voucherType}
+        </if>
+        <if test="roleType == 1">
+            and (vd.dealer_code = #{dealerCode} or e.redeem_dealer_code = #{dealerCode})
+        </if>
+        <if test="grantBatchIds != null">
+            and v.id in
+            <foreach close=")" collection="grantBatchIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

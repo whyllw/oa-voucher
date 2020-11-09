@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.EtlVoucherBatchMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.EtlVoucherBatch">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="voucher_template_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="batch_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="voucher_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="voucher_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="draw_expire_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="voucher_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="redeem_value" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="minimum_spend_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="expiration_reminder" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="remind_before_expire_day" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="expiry_date_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="redeem_start_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="redeem_end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="valid_for_number_of_days" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="usage_rule" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="vehicle_mileage_min" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="vehicle_mileage_max" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="single_time_limit_deduction_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="activity_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="min_purchase_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="redeem_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="redeem_template_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="business_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="business_type_option" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_vin_limited" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="is_overlapable" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="is_part_code_limited" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="is_dealer_limited" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="stock_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="distribution_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="received_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="used_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="expired_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, voucher_template_id, batch_code, voucher_type, voucher_name, draw_expire_date, 
+    voucher_count, redeem_value, minimum_spend_amount, expiration_reminder, remind_before_expire_day, 
+    expiry_date_type, redeem_start_time, redeem_end_time, valid_for_number_of_days, usage_rule, 
+    vehicle_mileage_min, vehicle_mileage_max, single_time_limit_deduction_amount, activity_name, 
+    min_purchase_number, status, redeem_time, redeem_template_code, business_type, business_type_option, 
+    is_vin_limited, is_overlapable, is_part_code_limited, is_dealer_limited, stock_count, 
+    distribution_count, received_count, used_count, expired_count, deleted, active, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from etl_voucher_batch
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from etl_voucher_batch
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlVoucherBatch" useGeneratedKeys="true">
+    insert into etl_voucher_batch (voucher_template_id, batch_code, voucher_type, 
+      voucher_name, draw_expire_date, voucher_count, 
+      redeem_value, minimum_spend_amount, expiration_reminder, 
+      remind_before_expire_day, expiry_date_type, 
+      redeem_start_time, redeem_end_time, valid_for_number_of_days, 
+      usage_rule, vehicle_mileage_min, vehicle_mileage_max, 
+      single_time_limit_deduction_amount, activity_name, 
+      min_purchase_number, status, redeem_time, 
+      redeem_template_code, business_type, business_type_option, 
+      is_vin_limited, is_overlapable, is_part_code_limited, 
+      is_dealer_limited, stock_count, distribution_count, 
+      received_count, used_count, expired_count, 
+      deleted, active, create_time, 
+      update_time)
+    values (#{voucherTemplateId,jdbcType=VARCHAR}, #{batchCode,jdbcType=VARCHAR}, #{voucherType,jdbcType=TINYINT}, 
+      #{voucherName,jdbcType=VARCHAR}, #{drawExpireDate,jdbcType=TIMESTAMP}, #{voucherCount,jdbcType=INTEGER}, 
+      #{redeemValue,jdbcType=VARCHAR}, #{minimumSpendAmount,jdbcType=VARCHAR}, #{expirationReminder,jdbcType=TINYINT}, 
+      #{remindBeforeExpireDay,jdbcType=INTEGER}, #{expiryDateType,jdbcType=TINYINT}, 
+      #{redeemStartTime,jdbcType=TIMESTAMP}, #{redeemEndTime,jdbcType=TIMESTAMP}, #{validForNumberOfDays,jdbcType=INTEGER}, 
+      #{usageRule,jdbcType=VARCHAR}, #{vehicleMileageMin,jdbcType=INTEGER}, #{vehicleMileageMax,jdbcType=INTEGER}, 
+      #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR}, #{activityName,jdbcType=VARCHAR}, 
+      #{minPurchaseNumber,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{redeemTime,jdbcType=TIMESTAMP}, 
+      #{redeemTemplateCode,jdbcType=VARCHAR}, #{businessType,jdbcType=TINYINT}, #{businessTypeOption,jdbcType=VARCHAR}, 
+      #{isVinLimited,jdbcType=TINYINT}, #{isOverlapable,jdbcType=TINYINT}, #{isPartCodeLimited,jdbcType=TINYINT}, 
+      #{isDealerLimited,jdbcType=TINYINT}, #{stockCount,jdbcType=INTEGER}, #{distributionCount,jdbcType=INTEGER}, 
+      #{receivedCount,jdbcType=INTEGER}, #{usedCount,jdbcType=INTEGER}, #{expiredCount,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=TINYINT}, #{active,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlVoucherBatch" useGeneratedKeys="true">
+    insert into etl_voucher_batch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="voucherTemplateId != null">
+        voucher_template_id,
+      </if>
+      <if test="batchCode != null">
+        batch_code,
+      </if>
+      <if test="voucherType != null">
+        voucher_type,
+      </if>
+      <if test="voucherName != null">
+        voucher_name,
+      </if>
+      <if test="drawExpireDate != null">
+        draw_expire_date,
+      </if>
+      <if test="voucherCount != null">
+        voucher_count,
+      </if>
+      <if test="redeemValue != null">
+        redeem_value,
+      </if>
+      <if test="minimumSpendAmount != null">
+        minimum_spend_amount,
+      </if>
+      <if test="expirationReminder != null">
+        expiration_reminder,
+      </if>
+      <if test="remindBeforeExpireDay != null">
+        remind_before_expire_day,
+      </if>
+      <if test="expiryDateType != null">
+        expiry_date_type,
+      </if>
+      <if test="redeemStartTime != null">
+        redeem_start_time,
+      </if>
+      <if test="redeemEndTime != null">
+        redeem_end_time,
+      </if>
+      <if test="validForNumberOfDays != null">
+        valid_for_number_of_days,
+      </if>
+      <if test="usageRule != null">
+        usage_rule,
+      </if>
+      <if test="vehicleMileageMin != null">
+        vehicle_mileage_min,
+      </if>
+      <if test="vehicleMileageMax != null">
+        vehicle_mileage_max,
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        single_time_limit_deduction_amount,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="minPurchaseNumber != null">
+        min_purchase_number,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="redeemTime != null">
+        redeem_time,
+      </if>
+      <if test="redeemTemplateCode != null">
+        redeem_template_code,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="businessTypeOption != null">
+        business_type_option,
+      </if>
+      <if test="isVinLimited != null">
+        is_vin_limited,
+      </if>
+      <if test="isOverlapable != null">
+        is_overlapable,
+      </if>
+      <if test="isPartCodeLimited != null">
+        is_part_code_limited,
+      </if>
+      <if test="isDealerLimited != null">
+        is_dealer_limited,
+      </if>
+      <if test="stockCount != null">
+        stock_count,
+      </if>
+      <if test="distributionCount != null">
+        distribution_count,
+      </if>
+      <if test="receivedCount != null">
+        received_count,
+      </if>
+      <if test="usedCount != null">
+        used_count,
+      </if>
+      <if test="expiredCount != null">
+        expired_count,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="active != null">
+        active,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="voucherTemplateId != null">
+        #{voucherTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null">
+        #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherType != null">
+        #{voucherType,jdbcType=TINYINT},
+      </if>
+      <if test="voucherName != null">
+        #{voucherName,jdbcType=VARCHAR},
+      </if>
+      <if test="drawExpireDate != null">
+        #{drawExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voucherCount != null">
+        #{voucherCount,jdbcType=INTEGER},
+      </if>
+      <if test="redeemValue != null">
+        #{redeemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumSpendAmount != null">
+        #{minimumSpendAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationReminder != null">
+        #{expirationReminder,jdbcType=TINYINT},
+      </if>
+      <if test="remindBeforeExpireDay != null">
+        #{remindBeforeExpireDay,jdbcType=INTEGER},
+      </if>
+      <if test="expiryDateType != null">
+        #{expiryDateType,jdbcType=TINYINT},
+      </if>
+      <if test="redeemStartTime != null">
+        #{redeemStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemEndTime != null">
+        #{redeemEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validForNumberOfDays != null">
+        #{validForNumberOfDays,jdbcType=INTEGER},
+      </if>
+      <if test="usageRule != null">
+        #{usageRule,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleMileageMin != null">
+        #{vehicleMileageMin,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleMileageMax != null">
+        #{vehicleMileageMax,jdbcType=INTEGER},
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="minPurchaseNumber != null">
+        #{minPurchaseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="redeemTime != null">
+        #{redeemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemTemplateCode != null">
+        #{redeemTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="businessTypeOption != null">
+        #{businessTypeOption,jdbcType=VARCHAR},
+      </if>
+      <if test="isVinLimited != null">
+        #{isVinLimited,jdbcType=TINYINT},
+      </if>
+      <if test="isOverlapable != null">
+        #{isOverlapable,jdbcType=TINYINT},
+      </if>
+      <if test="isPartCodeLimited != null">
+        #{isPartCodeLimited,jdbcType=TINYINT},
+      </if>
+      <if test="isDealerLimited != null">
+        #{isDealerLimited,jdbcType=TINYINT},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="distributionCount != null">
+        #{distributionCount,jdbcType=INTEGER},
+      </if>
+      <if test="receivedCount != null">
+        #{receivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="usedCount != null">
+        #{usedCount,jdbcType=INTEGER},
+      </if>
+      <if test="expiredCount != null">
+        #{expiredCount,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.EtlVoucherBatch">
+    update etl_voucher_batch
+    <set>
+      <if test="voucherTemplateId != null">
+        voucher_template_id = #{voucherTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null">
+        batch_code = #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherType != null">
+        voucher_type = #{voucherType,jdbcType=TINYINT},
+      </if>
+      <if test="voucherName != null">
+        voucher_name = #{voucherName,jdbcType=VARCHAR},
+      </if>
+      <if test="drawExpireDate != null">
+        draw_expire_date = #{drawExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voucherCount != null">
+        voucher_count = #{voucherCount,jdbcType=INTEGER},
+      </if>
+      <if test="redeemValue != null">
+        redeem_value = #{redeemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumSpendAmount != null">
+        minimum_spend_amount = #{minimumSpendAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationReminder != null">
+        expiration_reminder = #{expirationReminder,jdbcType=TINYINT},
+      </if>
+      <if test="remindBeforeExpireDay != null">
+        remind_before_expire_day = #{remindBeforeExpireDay,jdbcType=INTEGER},
+      </if>
+      <if test="expiryDateType != null">
+        expiry_date_type = #{expiryDateType,jdbcType=TINYINT},
+      </if>
+      <if test="redeemStartTime != null">
+        redeem_start_time = #{redeemStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemEndTime != null">
+        redeem_end_time = #{redeemEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validForNumberOfDays != null">
+        valid_for_number_of_days = #{validForNumberOfDays,jdbcType=INTEGER},
+      </if>
+      <if test="usageRule != null">
+        usage_rule = #{usageRule,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleMileageMin != null">
+        vehicle_mileage_min = #{vehicleMileageMin,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleMileageMax != null">
+        vehicle_mileage_max = #{vehicleMileageMax,jdbcType=INTEGER},
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        single_time_limit_deduction_amount = #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="minPurchaseNumber != null">
+        min_purchase_number = #{minPurchaseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="redeemTime != null">
+        redeem_time = #{redeemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemTemplateCode != null">
+        redeem_template_code = #{redeemTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="businessTypeOption != null">
+        business_type_option = #{businessTypeOption,jdbcType=VARCHAR},
+      </if>
+      <if test="isVinLimited != null">
+        is_vin_limited = #{isVinLimited,jdbcType=TINYINT},
+      </if>
+      <if test="isOverlapable != null">
+        is_overlapable = #{isOverlapable,jdbcType=TINYINT},
+      </if>
+      <if test="isPartCodeLimited != null">
+        is_part_code_limited = #{isPartCodeLimited,jdbcType=TINYINT},
+      </if>
+      <if test="isDealerLimited != null">
+        is_dealer_limited = #{isDealerLimited,jdbcType=TINYINT},
+      </if>
+      <if test="stockCount != null">
+        stock_count = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="distributionCount != null">
+        distribution_count = #{distributionCount,jdbcType=INTEGER},
+      </if>
+      <if test="receivedCount != null">
+        received_count = #{receivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="usedCount != null">
+        used_count = #{usedCount,jdbcType=INTEGER},
+      </if>
+      <if test="expiredCount != null">
+        expired_count = #{expiredCount,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.EtlVoucherBatch">
+    update etl_voucher_batch
+    set voucher_template_id = #{voucherTemplateId,jdbcType=VARCHAR},
+      batch_code = #{batchCode,jdbcType=VARCHAR},
+      voucher_type = #{voucherType,jdbcType=TINYINT},
+      voucher_name = #{voucherName,jdbcType=VARCHAR},
+      draw_expire_date = #{drawExpireDate,jdbcType=TIMESTAMP},
+      voucher_count = #{voucherCount,jdbcType=INTEGER},
+      redeem_value = #{redeemValue,jdbcType=VARCHAR},
+      minimum_spend_amount = #{minimumSpendAmount,jdbcType=VARCHAR},
+      expiration_reminder = #{expirationReminder,jdbcType=TINYINT},
+      remind_before_expire_day = #{remindBeforeExpireDay,jdbcType=INTEGER},
+      expiry_date_type = #{expiryDateType,jdbcType=TINYINT},
+      redeem_start_time = #{redeemStartTime,jdbcType=TIMESTAMP},
+      redeem_end_time = #{redeemEndTime,jdbcType=TIMESTAMP},
+      valid_for_number_of_days = #{validForNumberOfDays,jdbcType=INTEGER},
+      usage_rule = #{usageRule,jdbcType=VARCHAR},
+      vehicle_mileage_min = #{vehicleMileageMin,jdbcType=INTEGER},
+      vehicle_mileage_max = #{vehicleMileageMax,jdbcType=INTEGER},
+      single_time_limit_deduction_amount = #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      min_purchase_number = #{minPurchaseNumber,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      redeem_time = #{redeemTime,jdbcType=TIMESTAMP},
+      redeem_template_code = #{redeemTemplateCode,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=TINYINT},
+      business_type_option = #{businessTypeOption,jdbcType=VARCHAR},
+      is_vin_limited = #{isVinLimited,jdbcType=TINYINT},
+      is_overlapable = #{isOverlapable,jdbcType=TINYINT},
+      is_part_code_limited = #{isPartCodeLimited,jdbcType=TINYINT},
+      is_dealer_limited = #{isDealerLimited,jdbcType=TINYINT},
+      stock_count = #{stockCount,jdbcType=INTEGER},
+      distribution_count = #{distributionCount,jdbcType=INTEGER},
+      received_count = #{receivedCount,jdbcType=INTEGER},
+      used_count = #{usedCount,jdbcType=INTEGER},
+      expired_count = #{expiredCount,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      active = #{active,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

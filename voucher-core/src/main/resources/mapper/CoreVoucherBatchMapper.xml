@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreVoucherBatchMapper">
+    <select id="selectByBatchListQueryParam" resultType="java.util.Map">
+        select
+        vb.id as id,
+        vb.voucher_template_id as voucherTemplateId,
+        vb.voucher_type as voucherType,
+        vb.voucher_name as voucherName,
+        vb.activity_name as activityName,
+        vb.batch_code as batchCode,
+        vb.draw_expire_date as drawExpireDate,
+        vb.voucher_count as voucherCount,
+        vb.redeem_value as redeemValue,
+        vb.minimum_spend_amount as minimumSpendAmount,
+        vb.expiration_reminder as expirationReminder,
+        vb.remind_before_expire_day as remindBeforeExpireDay,
+        vb.expiry_date_type as expiryDateType,
+        vb.redeem_start_time as redeemStartTime,
+        vb.redeem_end_time as redeemEndTime,
+        vb.valid_for_number_of_days as validForNumberOfDays,
+        vb.usage_rule as usageRule,
+        vb.vehicle_mileage_min as vehicleMileageMin,
+        vb.vehicle_mileage_max as vehicleMileageMax,
+        vb.single_time_limit_deduction_amount as singleTimeLimitDeductionAmount,
+        vb.min_purchase_number as minPurchaseNumber,
+        vb.business_type as businessType,
+        vb.business_type_option as businessTypeOption,
+        vb.is_vin_limited as isVinLimited,
+        vb.is_overlapable as isOverlapable,
+        vb.is_part_code_limited as isPartCodeLimited,
+        vb.is_dealer_limited as isDealerLimited,
+        vb.stock_count as stockCount,
+        vb.distribution_count as distributionCount,
+        vb.received_count as receivedCount,
+        vb.used_count as usedCount,
+        vb.expired_count as expiredCount,
+        vb.status as status,
+        vb.redeem_type as redeemType,
+        vb.redeem_channel as redeemChannel,
+        vb.entity_code as entityCode,
+        vb.logo_url as logoUrl,
+        vb.shop_url as shopUrl,
+        vb.thirdpart_shop_name as shopName,
+        vb.thirdpart_redeem_code as voucherCodeSignal,
+        vb.thirdpart_code_type as codeType,
+        t.grantType as grantType,
+        t.grantBusinessType as grantBusinessType
+        from voucher_batch vb
+        left join (
+            select ovbtm.fk_batch_id as batchId,
+                   ovgt.grant_type as grantType,
+                   ovgt.business_type as grantBusinessType
+            from oem_voucher_grant_trigger ovgt, oem_voucher_batch_trigger_mapping ovbtm
+            where ovgt.id = ovbtm.fk_grant_type_id
+            union all
+            select ovbstm.fk_batch_id as batchId,
+                   4 as grantType,
+                   0 as grantBusinessType
+            from oem_voucher_select_grant_trigger ovsgt, oem_voucher_batch_select_trigger_mapping ovbstm
+            where ovsgt.id = ovbstm.fk_select_grant_id
+        ) t on t.batchId = vb.id
+        where deleted = 0 and active = 1
+        <if test="conf.voucherType != null">
+            and vb.voucher_type = #{conf.voucherType}
+        </if>
+        <if test="conf.voucherName != null">
+            and vb.voucher_name like concat('%',#{conf.voucherName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.batchCode != null">
+            and vb.batch_code = #{conf.batchCode}
+        </if>
+        <if test="conf.status != null">
+            and vb.status = #{conf.status}
+        </if>
+        <if test="conf.businessType != null">
+            and vb.business_type = #{conf.businessType}
+        </if>
+        <if test="conf.isOverlapable != null">
+            and vb.is_overlapable = #{conf.isOverlapable}
+        </if>
+        <if test="conf.activityName != null">
+            and vb.activity_name like concat('%',#{conf.activityName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.expireDateStartTime != null and conf.expireDateEndTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(vb.draw_expire_date) >= #{conf.expireDateStartTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(vb.draw_expire_date) <= #{conf.expireDateEndTime} ]]>
+        </if>
+        <if test="conf.grantType != null">
+            and t.grantType = #{conf.grantType}
+        </if>
+        <if test="conf.grantBusinessType != null">
+            and t.grantBusinessType = #{conf.grantBusinessType}
+        </if>
+    </select>
+    <select id="selectForGrantByBatchListQueryParam" resultType="java.util.Map">
+        select
+        id as id,
+        voucher_template_id as voucherTemplateId,
+        voucher_type as voucherType,
+        voucher_name as voucherName,
+        activity_name as activityName,
+        batch_code as batchCode,
+        draw_expire_date as drawExpireDate,
+        voucher_count as voucherCount,
+        redeem_value as redeemValue,
+        minimum_spend_amount as minimumSpendAmount,
+        expiration_reminder as expirationReminder,
+        remind_before_expire_day as remindBeforeExpireDay,
+        expiry_date_type as expiryDateType,
+        redeem_start_time as redeemStartTime,
+        redeem_end_time as redeemEndTime,
+        valid_for_number_of_days as validForNumberOfDays,
+        usage_rule as usageRule,
+        vehicle_mileage_min as vehicleMileageMin,
+        vehicle_mileage_max as vehicleMileageMax,
+        single_time_limit_deduction_amount as singleTimeLimitDeductionAmount,
+        min_purchase_number as minPurchaseNumber,
+        business_type as businessType,
+        business_type_option as businessTypeOption,
+        is_vin_limited as isVinLimited,
+        is_overlapable as isOverlapable,
+        is_part_code_limited as isPartCodeLimited,
+        is_dealer_limited as isDealerLimited,
+        stock_count as stockCount,
+        distribution_count as distributionCount,
+        received_count as receivedCount,
+        used_count as usedCount,
+        expired_count as expiredCount,
+        status as status,
+        redeem_type as redeemType,
+        redeem_channel as redeemChannel,
+        entity_code as entityCode,
+        logo_url as logoUrl,
+        shop_url as shopUrl,
+        thirdpart_shop_name as shopName,
+        thirdpart_redeem_code as voucherCodeSignal,
+        thirdpart_code_type as codeType
+        from voucher_batch
+        where deleted = 0 and active = 1
+        and voucher_type != 2
+        and status = 2
+        <if test="conf.voucherType != null">
+            and voucher_type = #{conf.voucherType}
+        </if>
+        <if test="conf.voucherName != null">
+            and voucher_name like concat('%',#{conf.voucherName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="conf.batchCode != null">
+            and batch_code = #{conf.batchCode}
+        </if>
+        <if test="conf.businessType != null">
+            and business_type = #{conf.businessType}
+        </if>
+        <if test="conf.isOverlapable != null">
+            and is_overlapable = #{conf.isOverlapable}
+        </if>
+        <if test="conf.activityName != null">
+            and activity_name like concat('%',#{conf.activityName,jdbcType=VARCHAR},'%')
+        </if>
+        and id not in (
+        select fk_batch_id from oem_voucher_batch_trigger_mapping
+        union all
+        select fk_batch_id from oem_voucher_batch_select_trigger_mapping)
+        <if test="notGrantBatchids != null and notGrantBatchids.size > 0">
+            and id not in
+            <foreach close=")" collection="notGrantBatchids" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectBytemplateIdList" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.Base_Column_List" />
+        FROM
+        voucher_batch where 1=1 and voucher_template_id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectByVoucherType" resultType="java.util.Map">
+        SELECT
+	        b.id AS batchIds,
+	        b.voucher_name AS voucherName,
+	        b.voucher_template_id as voucherTemplateId,
+	        b.min_purchase_number as minPurchaseNumber
+        FROM
+	        voucher_batch b
+	        LEFT JOIN voucher_limited_dealer_mapping vm on b.id = vm.fk_batch_id
+        WHERE
+	        b.voucher_type = #{voucherType}
+            AND b.`status` = #{status}
+            AND b.active = #{active}
+            AND b.deleted = #{deleted}
+            AND <![CDATA[ b.vehicle_mileage_min <= #{carAge} ]]>
+            AND <![CDATA[ b.vehicle_mileage_max >= #{carAge} ]]>
+            AND (b.is_dealer_limited = 0 OR vm.service_code = #{dealerCode})
+    </select>
+    <select id="selectBybatchIdList" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.BaseResultMap" >
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.Base_Column_List"/>
+        FROM
+        voucher_batch where 1=1 and id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectExpiredBatch" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.Base_Column_List" />
+        FROM
+        voucher_batch
+        where <![CDATA[ UNIX_TIMESTAMP(draw_expire_date) < UNIX_TIMESTAMP(DATE_FORMAT(now(),'%Y-%m-%d')) ]]>
+        and status != 3 and deleted = 0 and active = 1
+    </select>
+    <update id="updateBatchStatusByIdList" parameterType="java.util.Map">
+        UPDATE voucher_batch
+        SET status=#{status}
+        where id in
+        <foreach close=")" collection="batchIds" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateBatchThirdpartData" parameterType="java.util.Map">
+        UPDATE voucher_batch
+        SET thirdpart_shop_name=#{thirdpartShopName},thirdpart_redeem_code=#{thirdpartRedeemCode}
+        where id=#{id}
+    </update>
+    <select id="selectThirdpartNotImportBatch" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.BaseResultMap">
+        select
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchMapper.Base_Column_List" />
+        from voucher_batch v
+        where deleted=0 and active=1 and status = 2 and voucher_type = 5 and thirdpart_code_type=2
+        and id not in (
+            select fk_batch_id
+            from thirdpart_voucher_mapping
+            where deleted=0 and active=1
+        )
+    </select>
+</mapper>

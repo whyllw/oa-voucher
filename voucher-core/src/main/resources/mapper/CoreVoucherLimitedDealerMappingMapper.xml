@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreVoucherLimitedDealerMappingMapper">
+    <delete id="deleteDealersByBatchId" parameterType="java.lang.Integer">
+        delete from voucher_limited_dealer_mapping
+        where fk_batch_id = #{batchId,jdbcType=INTEGER}
+    </delete>
+    <insert id="batchInsertLimitedDealers" keyColumn="id" keyProperty="id" parameterType="list" useGeneratedKeys="true">
+        insert into voucher_limited_dealer_mapping (sale_code, service_code, big_region_code, small_region_code, name,
+        fk_batch_id, big_region_name, small_region_name, update_time) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.saleCode,jdbcType=VARCHAR},
+            #{item.serviceCode,jdbcType=VARCHAR},
+            #{item.bigRegionCode,jdbcType=VARCHAR},
+            #{item.smallRegionCode,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.fkBatchId,jdbcType=INTEGER},
+            #{item.bigRegionName,jdbcType=VARCHAR},
+            #{item.smallRegionName,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+    <insert id="batchInsertThirdpartShops" keyColumn="id" keyProperty="id" parameterType="list" useGeneratedKeys="true">
+        insert into voucher_limited_dealer_mapping (fk_batch_id, update_time, is_thirdpart, city, shop_name, shop_address) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.fkBatchId,jdbcType=INTEGER},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.isThirdpart,jdbcType=INTEGER},
+            #{item.city,jdbcType=VARCHAR},
+            #{item.shopName,jdbcType=VARCHAR},
+            #{item.shopAddress,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <select id="selectDealerCodeByBatchId" resultType="java.util.Map">
+       SELECT
+	        m.service_code AS dealercode
+        FROM
+	        voucher_limited_dealer_mapping m
+        WHERE
+	        m.fk_batch_id = #{batchId}
+    </select>
+    <select id="selectByBatchIdList" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedDealerMappingMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedDealerMappingMapper.Base_Column_List" />
+        FROM
+        voucher_limited_dealer_mapping where 1=1 and fk_batch_id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectByBatchId" resultType="java.util.Map">
+        SELECT
+        m.sale_code AS saleCode,
+        m.service_code as dealerCode,
+        m.name as dealerName,
+        m.big_region_code as bigRegionCode,
+        m.small_region_code as smallRegionCode,
+        m.big_region_name as bigRegionName,
+        m.small_region_name as smallRegionName
+        FROM
+        voucher_limited_dealer_mapping m where fk_batch_id = #{batchId}
+    </select>
+    <select id="selectShopByCityAndShopName" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedDealerMappingMapper.BaseResultMap">
+       SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedDealerMappingMapper.Base_Column_List" />
+        FROM voucher_limited_dealer_mapping
+        WHERE deleted = 0 AND active = 1
+        AND fk_batch_id = #{batchId}
+        <if test="cityCode != null">
+            AND city = #{cityCode}
+        </if>
+        <if test="shopName != null">
+            AND shop_name like concat('%',#{shopName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+    <select id="countByBatchIdAndDealerCode" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        voucher_limited_dealer_mapping m where fk_batch_id = #{batchId}
+    </select>
+</mapper>

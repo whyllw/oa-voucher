@@ -1,0 +1,56 @@
+stages:
+  - s2i
+
+dev:
+  stage: s2i
+  script:
+    - env
+    - s2i .
+  tags:
+    - dev
+  only:
+    - 920-dev
+
+
+uat3:
+  stage: s2i
+  script:
+    - env
+    - mvn clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true
+    - cp -r /home/gitlab-runner/s2i-mini $CI_PROJECT_DIR
+    - cp -r /home/gitlab-runner/deploy2tsf-1.py $CI_PROJECT_DIR
+    - cd $CI_PROJECT_DIR
+    - ./s2i-mini .
+  tags:
+    - ep-uat
+  only:
+    - uat
+
+test:
+  stage: s2i
+  script:
+    - mvn clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true
+    - env
+    - cp -r /home/gitlab-runner/s2i-mosc $CI_PROJECT_DIR
+    - cp -r /home/gitlab-runner/deploy2tsf.py $CI_PROJECT_DIR
+    - cd $CI_PROJECT_DIR
+    - ./s2i-mosc .
+  tags:
+    - ep-uat
+  only:
+    - one-app-uat
+
+
+# release:
+#   stage: s2i
+#   script:
+#     - env
+#     - cp -r /home/gitlab-runner/s2i-release $CI_PROJECT_DIR
+#     - cp -r /home/gitlab-runner/deploy2tsf.py $CI_PROJECT_DIR
+#     - cd $CI_PROJECT_DIR
+#     - ./s2i-release .
+#   tags:
+#     - release
+#   only:
+#     - 920-pre-release
+

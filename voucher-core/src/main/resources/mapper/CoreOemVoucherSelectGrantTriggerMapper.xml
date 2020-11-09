@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreOemVoucherSelectGrantTriggerMapper">
+    <select id="selectGrantInfoByQueryParam" resultType="java.util.Map">
+        SELECT
+        g.id as grantTypeId,
+        4 as grantType,
+        0 as grantBusinessType,
+        m.fk_batch_id as batchId
+        FROM
+        oem_voucher_select_grant_trigger g
+        LEFT JOIN oem_voucher_batch_select_trigger_mapping m ON g.id = m.fk_select_grant_id
+        <where>
+            g.active=1 and g.deleted=0
+            <if test="batchIds != null">
+                and m.fk_batch_id in
+                <foreach close=")" collection="batchIds" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

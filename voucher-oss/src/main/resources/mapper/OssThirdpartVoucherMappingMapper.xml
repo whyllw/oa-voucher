@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssThirdpartVoucherMappingMapper">
+    <delete id="deleteThirdpartByBatchId" parameterType="java.lang.Integer">
+        delete from thirdpart_voucher_mapping
+        where fk_batch_id = #{batchId,jdbcType=INTEGER}
+    </delete>
+    <insert id="batchInsertThirdpartCodes" parameterType="list" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert ignore into thirdpart_voucher_mapping (redeem_code, code_type, import_status, fail_reason, fk_batch_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.redeemCode,jdbcType=VARCHAR},
+            #{item.codeType,jdbcType=VARCHAR},
+            #{item.importStatus,jdbcType=VARCHAR},
+            #{item.failReason,jdbcType=INTEGER},
+            #{item.fkBatchId,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+    <select id="selectBybatchIdAndStatus" resultMap="com.fawvw.ms.voucher.basedao.mapper.ThirdpartVoucherMappingMapper.BaseResultMap" >
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.ThirdpartVoucherMappingMapper.Base_Column_List"/>
+        FROM thirdpart_voucher_mapping
+        where deleted=0 and active=1
+         and fk_batch_id = #{fkBatchId} and import_status = #{importStatus}
+    </select>
+    <select id="countBybatchIdAndStatus" resultType="java.lang.Integer" >
+        SELECT
+        count(1)
+        FROM thirdpart_voucher_mapping
+        where deleted=0 and active=1
+         and fk_batch_id = #{fkBatchId} and import_status = #{importStatus}
+    </select>
+    <select id="countBybatchId" resultType="java.lang.Integer" >
+        SELECT
+        count(1)
+        FROM thirdpart_voucher_mapping
+        where deleted=0 and active=1 and fk_batch_id = #{fkBatchId}
+    </select>
+    <update id="updateImportStatusByIds" parameterType="java.util.Map">
+        UPDATE thirdpart_voucher_mapping
+        SET import_status=#{importStatus},
+            fail_reason=#{failReason}
+        where id in
+        <foreach close=")" collection="ids" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <select id="selectThirdpartGrantBatch" resultType="java.util.Map">
+        select count(1) currentImportCount,
+               t.fk_batch_id batchId,
+               v.voucher_count voucherCount
+        from thirdpart_voucher_mapping t, voucher_batch v
+        where v.id=t.fk_batch_id
+        and v.voucher_type = 5
+        and t.import_status = 1 and t.code_type=2 and t.deleted=0 and t.active=1
+        group by t.fk_batch_id
+    </select>
+</mapper>

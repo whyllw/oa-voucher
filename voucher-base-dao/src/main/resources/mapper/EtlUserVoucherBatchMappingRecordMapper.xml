@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.EtlUserVoucherBatchMappingRecordMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.EtlUserVoucherBatchMappingRecord">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="fk_batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="batch_code" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="voucher_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="voucher_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="business_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="voucher_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="activity_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="aid_ref" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="vin" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="grant_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="grant_dealer_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_dealer_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_dealer_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_dealer_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="work_sheet_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_start_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="redeem_end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="draw_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="grant_big_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_big_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_small_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_small_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_big_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_big_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_small_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_small_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="make_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="vehicle_sale_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="single_time_limit_deduction_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="redeem_value" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="minimum_spend_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_channel" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="voucher_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="voucher_template_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fk_batch_id, batch_code, voucher_status, voucher_type, business_type, voucher_name,
+    activity_name, aid_ref, user_name, mobile, vin, redeem_time, grant_time, grant_dealer_name,
+    grant_dealer_code, redeem_dealer_name, redeem_dealer_code, work_sheet_no, redeem_code,
+    redeem_start_time, redeem_end_time, draw_time, grant_big_region_code, grant_big_region_name,
+    grant_small_region_code, grant_small_region_name, redeem_big_region_code, redeem_big_region_name,
+    redeem_small_region_code, redeem_small_region_name, make_name, vehicle_sale_date,
+    single_time_limit_deduction_amount, redeem_value, minimum_spend_amount, grant_channel,
+    voucher_id, voucher_template_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from etl_user_voucher_batch_mapping_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from etl_user_voucher_batch_mapping_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVoucherBatchMappingRecord" useGeneratedKeys="true">
+    insert into etl_user_voucher_batch_mapping_record (fk_batch_id, batch_code, voucher_status,
+      voucher_type, business_type, voucher_name,
+      activity_name, aid_ref, user_name,
+      mobile, vin, redeem_time,
+      grant_time, grant_dealer_name, grant_dealer_code,
+      redeem_dealer_name, redeem_dealer_code, work_sheet_no,
+      redeem_code, redeem_start_time, redeem_end_time,
+      draw_time, grant_big_region_code, grant_big_region_name,
+      grant_small_region_code, grant_small_region_name,
+      redeem_big_region_code, redeem_big_region_name,
+      redeem_small_region_code, redeem_small_region_name,
+      make_name, vehicle_sale_date, single_time_limit_deduction_amount,
+      redeem_value, minimum_spend_amount, grant_channel,
+      voucher_id, voucher_template_id)
+    values (#{fkBatchId,jdbcType=INTEGER}, #{batchCode,jdbcType=INTEGER}, #{voucherStatus,jdbcType=TINYINT},
+      #{voucherType,jdbcType=TINYINT}, #{businessType,jdbcType=TINYINT}, #{voucherName,jdbcType=VARCHAR},
+      #{activityName,jdbcType=VARCHAR}, #{aidRef,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{redeemTime,jdbcType=TIMESTAMP},
+      #{grantTime,jdbcType=TIMESTAMP}, #{grantDealerName,jdbcType=VARCHAR}, #{grantDealerCode,jdbcType=VARCHAR},
+      #{redeemDealerName,jdbcType=VARCHAR}, #{redeemDealerCode,jdbcType=VARCHAR}, #{workSheetNo,jdbcType=VARCHAR},
+      #{redeemCode,jdbcType=VARCHAR}, #{redeemStartTime,jdbcType=TIMESTAMP}, #{redeemEndTime,jdbcType=TIMESTAMP},
+      #{drawTime,jdbcType=TIMESTAMP}, #{grantBigRegionCode,jdbcType=VARCHAR}, #{grantBigRegionName,jdbcType=VARCHAR},
+      #{grantSmallRegionCode,jdbcType=VARCHAR}, #{grantSmallRegionName,jdbcType=VARCHAR},
+      #{redeemBigRegionCode,jdbcType=VARCHAR}, #{redeemBigRegionName,jdbcType=VARCHAR},
+      #{redeemSmallRegionCode,jdbcType=VARCHAR}, #{redeemSmallRegionName,jdbcType=VARCHAR},
+      #{makeName,jdbcType=VARCHAR}, #{vehicleSaleDate,jdbcType=TIMESTAMP}, #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      #{redeemValue,jdbcType=VARCHAR}, #{minimumSpendAmount,jdbcType=VARCHAR}, #{grantChannel,jdbcType=VARCHAR},
+      #{voucherId,jdbcType=VARCHAR}, #{voucherTemplateId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVoucherBatchMappingRecord" useGeneratedKeys="true">
+    insert into etl_user_voucher_batch_mapping_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fkBatchId != null">
+        fk_batch_id,
+      </if>
+      <if test="batchCode != null">
+        batch_code,
+      </if>
+      <if test="voucherStatus != null">
+        voucher_status,
+      </if>
+      <if test="voucherType != null">
+        voucher_type,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="voucherName != null">
+        voucher_name,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="aidRef != null">
+        aid_ref,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="redeemTime != null">
+        redeem_time,
+      </if>
+      <if test="grantTime != null">
+        grant_time,
+      </if>
+      <if test="grantDealerName != null">
+        grant_dealer_name,
+      </if>
+      <if test="grantDealerCode != null">
+        grant_dealer_code,
+      </if>
+      <if test="redeemDealerName != null">
+        redeem_dealer_name,
+      </if>
+      <if test="redeemDealerCode != null">
+        redeem_dealer_code,
+      </if>
+      <if test="workSheetNo != null">
+        work_sheet_no,
+      </if>
+      <if test="redeemCode != null">
+        redeem_code,
+      </if>
+      <if test="redeemStartTime != null">
+        redeem_start_time,
+      </if>
+      <if test="redeemEndTime != null">
+        redeem_end_time,
+      </if>
+      <if test="drawTime != null">
+        draw_time,
+      </if>
+      <if test="grantBigRegionCode != null">
+        grant_big_region_code,
+      </if>
+      <if test="grantBigRegionName != null">
+        grant_big_region_name,
+      </if>
+      <if test="grantSmallRegionCode != null">
+        grant_small_region_code,
+      </if>
+      <if test="grantSmallRegionName != null">
+        grant_small_region_name,
+      </if>
+      <if test="redeemBigRegionCode != null">
+        redeem_big_region_code,
+      </if>
+      <if test="redeemBigRegionName != null">
+        redeem_big_region_name,
+      </if>
+      <if test="redeemSmallRegionCode != null">
+        redeem_small_region_code,
+      </if>
+      <if test="redeemSmallRegionName != null">
+        redeem_small_region_name,
+      </if>
+      <if test="makeName != null">
+        make_name,
+      </if>
+      <if test="vehicleSaleDate != null">
+        vehicle_sale_date,
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        single_time_limit_deduction_amount,
+      </if>
+      <if test="redeemValue != null">
+        redeem_value,
+      </if>
+      <if test="minimumSpendAmount != null">
+        minimum_spend_amount,
+      </if>
+      <if test="grantChannel != null">
+        grant_channel,
+      </if>
+      <if test="voucherId != null">
+        voucher_id,
+      </if>
+      <if test="voucherTemplateId != null">
+        voucher_template_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fkBatchId != null">
+        #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="batchCode != null">
+        #{batchCode,jdbcType=INTEGER},
+      </if>
+      <if test="voucherStatus != null">
+        #{voucherStatus,jdbcType=TINYINT},
+      </if>
+      <if test="voucherType != null">
+        #{voucherType,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="voucherName != null">
+        #{voucherName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="aidRef != null">
+        #{aidRef,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemTime != null">
+        #{redeemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantTime != null">
+        #{grantTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantDealerName != null">
+        #{grantDealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="grantDealerCode != null">
+        #{grantDealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemDealerName != null">
+        #{redeemDealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemDealerCode != null">
+        #{redeemDealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workSheetNo != null">
+        #{workSheetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemCode != null">
+        #{redeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemStartTime != null">
+        #{redeemStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemEndTime != null">
+        #{redeemEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawTime != null">
+        #{drawTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantBigRegionCode != null">
+        #{grantBigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grantBigRegionName != null">
+        #{grantBigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="grantSmallRegionCode != null">
+        #{grantSmallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grantSmallRegionName != null">
+        #{grantSmallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemBigRegionCode != null">
+        #{redeemBigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemBigRegionName != null">
+        #{redeemBigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemSmallRegionCode != null">
+        #{redeemSmallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemSmallRegionName != null">
+        #{redeemSmallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="makeName != null">
+        #{makeName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSaleDate != null">
+        #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemValue != null">
+        #{redeemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumSpendAmount != null">
+        #{minimumSpendAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="grantChannel != null">
+        #{grantChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherId != null">
+        #{voucherId,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherTemplateId != null">
+        #{voucherTemplateId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVoucherBatchMappingRecord">
+    update etl_user_voucher_batch_mapping_record
+    <set>
+      <if test="fkBatchId != null">
+        fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="batchCode != null">
+        batch_code = #{batchCode,jdbcType=INTEGER},
+      </if>
+      <if test="voucherStatus != null">
+        voucher_status = #{voucherStatus,jdbcType=TINYINT},
+      </if>
+      <if test="voucherType != null">
+        voucher_type = #{voucherType,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="voucherName != null">
+        voucher_name = #{voucherName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="aidRef != null">
+        aid_ref = #{aidRef,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemTime != null">
+        redeem_time = #{redeemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantTime != null">
+        grant_time = #{grantTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantDealerName != null">
+        grant_dealer_name = #{grantDealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="grantDealerCode != null">
+        grant_dealer_code = #{grantDealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemDealerName != null">
+        redeem_dealer_name = #{redeemDealerName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemDealerCode != null">
+        redeem_dealer_code = #{redeemDealerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workSheetNo != null">
+        work_sheet_no = #{workSheetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemCode != null">
+        redeem_code = #{redeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemStartTime != null">
+        redeem_start_time = #{redeemStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemEndTime != null">
+        redeem_end_time = #{redeemEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawTime != null">
+        draw_time = #{drawTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantBigRegionCode != null">
+        grant_big_region_code = #{grantBigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grantBigRegionName != null">
+        grant_big_region_name = #{grantBigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="grantSmallRegionCode != null">
+        grant_small_region_code = #{grantSmallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grantSmallRegionName != null">
+        grant_small_region_name = #{grantSmallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemBigRegionCode != null">
+        redeem_big_region_code = #{redeemBigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemBigRegionName != null">
+        redeem_big_region_name = #{redeemBigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemSmallRegionCode != null">
+        redeem_small_region_code = #{redeemSmallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemSmallRegionName != null">
+        redeem_small_region_name = #{redeemSmallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="makeName != null">
+        make_name = #{makeName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSaleDate != null">
+        vehicle_sale_date = #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="singleTimeLimitDeductionAmount != null">
+        single_time_limit_deduction_amount = #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="redeemValue != null">
+        redeem_value = #{redeemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumSpendAmount != null">
+        minimum_spend_amount = #{minimumSpendAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="grantChannel != null">
+        grant_channel = #{grantChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherId != null">
+        voucher_id = #{voucherId,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherTemplateId != null">
+        voucher_template_id = #{voucherTemplateId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVoucherBatchMappingRecord">
+    update etl_user_voucher_batch_mapping_record
+    set fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      batch_code = #{batchCode,jdbcType=INTEGER},
+      voucher_status = #{voucherStatus,jdbcType=TINYINT},
+      voucher_type = #{voucherType,jdbcType=TINYINT},
+      business_type = #{businessType,jdbcType=TINYINT},
+      voucher_name = #{voucherName,jdbcType=VARCHAR},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      aid_ref = #{aidRef,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      redeem_time = #{redeemTime,jdbcType=TIMESTAMP},
+      grant_time = #{grantTime,jdbcType=TIMESTAMP},
+      grant_dealer_name = #{grantDealerName,jdbcType=VARCHAR},
+      grant_dealer_code = #{grantDealerCode,jdbcType=VARCHAR},
+      redeem_dealer_name = #{redeemDealerName,jdbcType=VARCHAR},
+      redeem_dealer_code = #{redeemDealerCode,jdbcType=VARCHAR},
+      work_sheet_no = #{workSheetNo,jdbcType=VARCHAR},
+      redeem_code = #{redeemCode,jdbcType=VARCHAR},
+      redeem_start_time = #{redeemStartTime,jdbcType=TIMESTAMP},
+      redeem_end_time = #{redeemEndTime,jdbcType=TIMESTAMP},
+      draw_time = #{drawTime,jdbcType=TIMESTAMP},
+      grant_big_region_code = #{grantBigRegionCode,jdbcType=VARCHAR},
+      grant_big_region_name = #{grantBigRegionName,jdbcType=VARCHAR},
+      grant_small_region_code = #{grantSmallRegionCode,jdbcType=VARCHAR},
+      grant_small_region_name = #{grantSmallRegionName,jdbcType=VARCHAR},
+      redeem_big_region_code = #{redeemBigRegionCode,jdbcType=VARCHAR},
+      redeem_big_region_name = #{redeemBigRegionName,jdbcType=VARCHAR},
+      redeem_small_region_code = #{redeemSmallRegionCode,jdbcType=VARCHAR},
+      redeem_small_region_name = #{redeemSmallRegionName,jdbcType=VARCHAR},
+      make_name = #{makeName,jdbcType=VARCHAR},
+      vehicle_sale_date = #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      single_time_limit_deduction_amount = #{singleTimeLimitDeductionAmount,jdbcType=VARCHAR},
+      redeem_value = #{redeemValue,jdbcType=VARCHAR},
+      minimum_spend_amount = #{minimumSpendAmount,jdbcType=VARCHAR},
+      grant_channel = #{grantChannel,jdbcType=VARCHAR},
+      voucher_id = #{voucherId,jdbcType=VARCHAR},
+      voucher_template_id = #{voucherTemplateId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

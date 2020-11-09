@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssOemVoucherUserTriggerReceiptionMappingMapper">
+    <select id="selectByUserId" resultType="com.fawvw.ms.voucher.basedao.model.OemVoucherUserTriggerReceiptionMapping">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherUserTriggerReceiptionMappingMapper.Base_Column_List" />
+        FROM
+        oem_voucher_user_trigger_receiption_mapping m
+        WHERE
+        m.aid_ref = #{aid}
+    </select>
+    <select id="selectByGrantIdAndUserId" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherUserTriggerReceiptionMappingMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherUserTriggerReceiptionMappingMapper.Base_Column_List" />
+        FROM
+        oem_voucher_user_trigger_receiption_mapping m
+        WHERE
+        m.aid_ref = #{refId} and m.fk_grant_type_id = #{grantTypeId} and m.fk_batch_id = #{batchId}
+        LIMIT 1
+    </select>
+    <select id="countGrantNum" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        oem_voucher_user_trigger_receiption_mapping m
+        WHERE
+        m.aid_ref = #{refId} and m.fk_grant_type_id = #{grantTypeId} and m.fk_batch_id = #{batchId}
+    </select>
+</mapper>

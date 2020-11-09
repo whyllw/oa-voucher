@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssVoucherBatchDealerGrantRecordMapper">
+    <select id="grantBatchRecordList" resultType="java.util.Map">
+        select
+        r.id as id,
+        r.mobile as mobile,
+        r.vin as vin,
+        r.grant_count as grantCount,
+        r.status as status,
+        r.car_model_name as carModelName,
+        b.voucher_name as voucherName,
+        b.redeem_value as redeemValue
+        from voucher_batch_dealer_grant_record r
+        inner join voucher_batch b on r.fk_batch_id = b.id
+        <where>
+            <if test="dealerCode != null and dealerCode != ''">
+                and r.dealer_code = #{dealerCode}
+            </if>
+            <if test="vin != null and vin != ''">
+                and r.vin = #{vin}
+            </if>
+            <if test="phone != null and phone != ''">
+                and r.mobile = #{phone}
+            </if>
+        </where>
+    </select>
+    <select id="queryByVin" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchDealerGrantRecordMapper.BaseResultMap">
+        select
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchDealerGrantRecordMapper.Base_Column_List" />
+        from voucher_batch_dealer_grant_record
+        where vin = #{vin} and status = 0
+    </select>
+</mapper>

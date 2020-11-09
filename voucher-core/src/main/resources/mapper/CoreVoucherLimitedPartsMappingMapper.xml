@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreVoucherLimitedPartsMappingMapper">
+    <insert id="batchInsertLimitedParts" parameterType="list" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into voucher_limited_parts_mapping (part_name, part_code, car_model, fk_batch_id, update_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.partName,jdbcType=VARCHAR},
+            #{item.partCode,jdbcType=VARCHAR},
+            #{item.carModel,jdbcType=VARCHAR},
+            #{item.fkBatchId,jdbcType=INTEGER},
+            #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+    <delete id="deletePartsByBatchId" parameterType="java.lang.Integer">
+        delete from voucher_limited_parts_mapping
+        where fk_batch_id = #{batchId,jdbcType=INTEGER}
+    </delete>
+    <select id="selectByBatchId" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedPartsMappingMapper.BaseResultMap">
+        select
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedPartsMappingMapper.Base_Column_List"/>
+        from voucher_limited_parts_mapping
+        where fk_batch_id = #{batchId}
+    </select>
+    <select id="selectByBatchIdList" resultMap="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedPartsMappingMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedPartsMappingMapper.Base_Column_List" />
+        FROM
+        voucher_limited_parts_mapping where 1=1 and fk_batch_id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

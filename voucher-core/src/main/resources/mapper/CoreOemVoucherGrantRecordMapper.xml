@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreOemVoucherGrantRecordMapper">
+    <insert id="insertOemGrantRecordByBatch" parameterType="list" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into oem_voucher_grant_record(aid_ref,grantee,grantee_check_status,grantee_type,grantee_check_status_failed_reason,fk_grant_type_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.aidRef},#{item.grantee},#{item.granteeCheckStatus},#{item.granteeType},#{item.granteeCheckStatusFailedReason},#{item.fkGrantTypeId})
+        </foreach>
+    </insert>
+    <select id="selectCheckSuccessRecordCount" resultType="java.util.Map">
+        SELECT
+	        COUNT(1) as recordCount,
+            fk_grant_type_id as grantTypeId
+        FROM
+	        oem_voucher_grant_record
+        WHERE
+	        deleted = 0 AND active = 1
+            AND grantee_check_status = 1
+        <if test="grantTypeIds != null">
+            AND fk_grant_type_id in
+            <foreach close=")" collection="grantTypeIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY fk_grant_type_id
+    </select>
+    <select id="selectCheckFailRecordCount" resultType="java.util.Map">
+        SELECT
+        COUNT(1) as recordCount,
+        fk_grant_type_id as grantTypeId
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND grantee_check_status = 2
+        <if test="grantTypeIds != null">
+            AND fk_grant_type_id in
+            <foreach close=")" collection="grantTypeIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY fk_grant_type_id
+    </select>
+    <select id="selectSendSmsSuccessRecordCount" resultType="java.util.Map">
+        SELECT
+        COUNT(1) as recordCount,
+        fk_grant_type_id as grantTypeId
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND sms_send_status = 1
+        <if test="grantTypeIds != null">
+            AND fk_grant_type_id in
+            <foreach close=")" collection="grantTypeIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY fk_grant_type_id
+    </select>
+    <select id="selectSendSmsFailRecordCount" resultType="java.util.Map">
+        SELECT
+        COUNT(1) as recordCount,
+        fk_grant_type_id as grantTypeId
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND sms_send_status = 2
+        <if test="grantTypeIds != null">
+            AND fk_grant_type_id in
+            <foreach close=")" collection="grantTypeIds" index="index" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY fk_grant_type_id
+    </select>
+    <select id="selectUserGrantRecord" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.Base_Column_List" />
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND aid_ref = #{aidRef}
+        AND grantee_check_status = 1
+        AND grant_voucher_status = 0
+    </select>
+    <select id="selectUserGrantRecordByMobile" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.Base_Column_List" />
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1 AND grantee_type = 1
+        AND aid_ref is null
+        AND grantee = #{mobile}
+        AND grantee_check_status != 1
+        AND grant_voucher_status = 0
+    </select>
+    <select id="selectCheckFailRecords" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.Base_Column_List" />
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND fk_grant_type_id = #{grantTypeId}
+        AND grantee_check_status != 1
+    </select>
+    <select id="selectSmsSendFailRecords" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.Base_Column_List" />
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND fk_grant_type_id = #{grantTypeId}
+        AND sms_send_status != 1
+    </select>
+    <select id="selectRecordsByGrantTypeId" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantRecordMapper.Base_Column_List" />
+        FROM
+        oem_voucher_grant_record
+        WHERE
+        deleted = 0 AND active = 1
+        AND fk_grant_type_id = #{grantTypeId}
+    </select>
+</mapper>

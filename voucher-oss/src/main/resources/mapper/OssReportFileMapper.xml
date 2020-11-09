@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssReportFileMapper">
+    <select id="selectReportFileRecord" resultType="java.util.HashMap">
+        SELECT
+        id AS id,
+        url AS url,
+        create_time AS createTime
+        FROM report_file
+        WHERE deleted=0 and fk_operation_user_ref_id is null
+        <if test="beginTime != null and endTime != null">
+            and <![CDATA[ UNIX_TIMESTAMP(create_time) >= #{beginTime} ]]>
+            and <![CDATA[ UNIX_TIMESTAMP(create_time) <= #{endTime} ]]>
+        </if>
+        order by create_time
+    </select>
+    <select id="selectReportFileRecordBySearchParam" resultType="java.util.HashMap">
+        SELECT
+        id AS id,
+        url AS url,
+        report_name AS reportName,
+        extention AS extention,
+        fk_operation_user_ref_id AS fkOperationUserRefId,
+        file_record_num AS fileRecordNum,
+        file_size AS fileSize,
+        export_progress AS exportProgress,
+        create_time AS createTime
+        FROM report_file
+        WHERE deleted=0 and active=1 and fk_operation_user_ref_id is not null
+        <if test="adminUser != null">
+            and fk_operation_user_ref_id = #{adminUser}
+        </if>
+        <if test="reportFileName != null">
+            and report_name like concat('%',#{reportFileName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

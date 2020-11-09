@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.OemVoucherGrantTriggerMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.OemVoucherGrantTrigger">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="grant_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="business_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="app_message_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="trigger_condition" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="grant_limit_per_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="grant_times_limit" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="voucher_received_message_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="pop_up_message_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="sms_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="import_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="import_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sms_template_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grant_time_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, grant_type, business_type, app_message_notice, trigger_condition, grant_limit_per_time,
+    grant_times_limit, voucher_received_message_content, create_time, update_time, pop_up_message_notice,
+    sms_notice, deleted, active, import_type, import_num, sms_template_id, grant_time_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from oem_voucher_grant_trigger
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oem_voucher_grant_trigger
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherGrantTrigger" useGeneratedKeys="true">
+    insert into oem_voucher_grant_trigger (grant_type, business_type, app_message_notice,
+      trigger_condition, grant_limit_per_time, grant_times_limit,
+      voucher_received_message_content, create_time,
+      update_time, pop_up_message_notice, sms_notice,
+      deleted, active, import_type,
+      import_num, sms_template_id, grant_time_type
+      )
+    values (#{grantType,jdbcType=TINYINT}, #{businessType,jdbcType=TINYINT}, #{appMessageNotice,jdbcType=TINYINT},
+      #{triggerCondition,jdbcType=TINYINT}, #{grantLimitPerTime,jdbcType=INTEGER}, #{grantTimesLimit,jdbcType=INTEGER},
+      #{voucherReceivedMessageContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{popUpMessageNotice,jdbcType=TINYINT}, #{smsNotice,jdbcType=TINYINT},
+      #{deleted,jdbcType=TINYINT}, #{active,jdbcType=TINYINT}, #{importType,jdbcType=TINYINT},
+      #{importNum,jdbcType=INTEGER}, #{smsTemplateId,jdbcType=VARCHAR}, #{grantTimeType,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherGrantTrigger" useGeneratedKeys="true">
+    insert into oem_voucher_grant_trigger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grantType != null">
+        grant_type,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="appMessageNotice != null">
+        app_message_notice,
+      </if>
+      <if test="triggerCondition != null">
+        trigger_condition,
+      </if>
+      <if test="grantLimitPerTime != null">
+        grant_limit_per_time,
+      </if>
+      <if test="grantTimesLimit != null">
+        grant_times_limit,
+      </if>
+      <if test="voucherReceivedMessageContent != null">
+        voucher_received_message_content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="popUpMessageNotice != null">
+        pop_up_message_notice,
+      </if>
+      <if test="smsNotice != null">
+        sms_notice,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="active != null">
+        active,
+      </if>
+      <if test="importType != null">
+        import_type,
+      </if>
+      <if test="importNum != null">
+        import_num,
+      </if>
+      <if test="smsTemplateId != null">
+        sms_template_id,
+      </if>
+      <if test="grantTimeType != null">
+        grant_time_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grantType != null">
+        #{grantType,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="appMessageNotice != null">
+        #{appMessageNotice,jdbcType=TINYINT},
+      </if>
+      <if test="triggerCondition != null">
+        #{triggerCondition,jdbcType=TINYINT},
+      </if>
+      <if test="grantLimitPerTime != null">
+        #{grantLimitPerTime,jdbcType=INTEGER},
+      </if>
+      <if test="grantTimesLimit != null">
+        #{grantTimesLimit,jdbcType=INTEGER},
+      </if>
+      <if test="voucherReceivedMessageContent != null">
+        #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="popUpMessageNotice != null">
+        #{popUpMessageNotice,jdbcType=TINYINT},
+      </if>
+      <if test="smsNotice != null">
+        #{smsNotice,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=TINYINT},
+      </if>
+      <if test="importType != null">
+        #{importType,jdbcType=TINYINT},
+      </if>
+      <if test="importNum != null">
+        #{importNum,jdbcType=INTEGER},
+      </if>
+      <if test="smsTemplateId != null">
+        #{smsTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="grantTimeType != null">
+        #{grantTimeType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherGrantTrigger">
+    update oem_voucher_grant_trigger
+    <set>
+      <if test="grantType != null">
+        grant_type = #{grantType,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="appMessageNotice != null">
+        app_message_notice = #{appMessageNotice,jdbcType=TINYINT},
+      </if>
+      <if test="triggerCondition != null">
+        trigger_condition = #{triggerCondition,jdbcType=TINYINT},
+      </if>
+      <if test="grantLimitPerTime != null">
+        grant_limit_per_time = #{grantLimitPerTime,jdbcType=INTEGER},
+      </if>
+      <if test="grantTimesLimit != null">
+        grant_times_limit = #{grantTimesLimit,jdbcType=INTEGER},
+      </if>
+      <if test="voucherReceivedMessageContent != null">
+        voucher_received_message_content = #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="popUpMessageNotice != null">
+        pop_up_message_notice = #{popUpMessageNotice,jdbcType=TINYINT},
+      </if>
+      <if test="smsNotice != null">
+        sms_notice = #{smsNotice,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=TINYINT},
+      </if>
+      <if test="importType != null">
+        import_type = #{importType,jdbcType=TINYINT},
+      </if>
+      <if test="importNum != null">
+        import_num = #{importNum,jdbcType=INTEGER},
+      </if>
+      <if test="smsTemplateId != null">
+        sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="grantTimeType != null">
+        grant_time_type = #{grantTimeType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherGrantTrigger">
+    update oem_voucher_grant_trigger
+    set grant_type = #{grantType,jdbcType=TINYINT},
+    business_type = #{businessType,jdbcType=TINYINT},
+    app_message_notice = #{appMessageNotice,jdbcType=TINYINT},
+    trigger_condition = #{triggerCondition,jdbcType=TINYINT},
+    grant_limit_per_time = #{grantLimitPerTime,jdbcType=INTEGER},
+    grant_times_limit = #{grantTimesLimit,jdbcType=INTEGER},
+    voucher_received_message_content = #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    pop_up_message_notice = #{popUpMessageNotice,jdbcType=TINYINT},
+    sms_notice = #{smsNotice,jdbcType=TINYINT},
+    deleted = #{deleted,jdbcType=TINYINT},
+    active = #{active,jdbcType=TINYINT},
+    import_type = #{importType,jdbcType=TINYINT},
+    import_num = #{importNum,jdbcType=INTEGER},
+    sms_template_id = #{smsTemplateId,jdbcType=VARCHAR},
+    grant_time_type = #{grantTimeType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

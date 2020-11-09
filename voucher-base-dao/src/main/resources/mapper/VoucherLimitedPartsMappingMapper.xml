@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedPartsMappingMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedomain.vo.VoucherLimitedPartsMapping">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="part_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="part_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="car_model" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="fk_batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, part_name, part_code, car_model, fk_batch_id, deleted, create_time, update_time, 
+    active
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from voucher_limited_parts_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from voucher_limited_parts_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedomain.vo.VoucherLimitedPartsMapping" useGeneratedKeys="true">
+    insert into voucher_limited_parts_mapping (part_name, part_code, car_model, 
+      fk_batch_id, deleted, create_time, 
+      update_time, active)
+    values (#{partName,jdbcType=VARCHAR}, #{partCode,jdbcType=VARCHAR}, #{carModel,jdbcType=VARCHAR}, 
+      #{fkBatchId,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{active,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedomain.vo.VoucherLimitedPartsMapping" useGeneratedKeys="true">
+    insert into voucher_limited_parts_mapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="partName != null">
+        part_name,
+      </if>
+      <if test="partCode != null">
+        part_code,
+      </if>
+      <if test="carModel != null">
+        car_model,
+      </if>
+      <if test="fkBatchId != null">
+        fk_batch_id,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="active != null">
+        active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="partName != null">
+        #{partName,jdbcType=VARCHAR},
+      </if>
+      <if test="partCode != null">
+        #{partCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carModel != null">
+        #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="fkBatchId != null">
+        #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedomain.vo.VoucherLimitedPartsMapping">
+    update voucher_limited_parts_mapping
+    <set>
+      <if test="partName != null">
+        part_name = #{partName,jdbcType=VARCHAR},
+      </if>
+      <if test="partCode != null">
+        part_code = #{partCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carModel != null">
+        car_model = #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="fkBatchId != null">
+        fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedomain.vo.VoucherLimitedPartsMapping">
+    update voucher_limited_parts_mapping
+    set part_name = #{partName,jdbcType=VARCHAR},
+      part_code = #{partCode,jdbcType=VARCHAR},
+      car_model = #{carModel,jdbcType=VARCHAR},
+      fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      active = #{active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

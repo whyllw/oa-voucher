@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.VoucherBatchDealerGrantRecordMapper">
+    <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.VoucherBatchDealerGrantRecord">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="aid_ref" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="vin" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="dealer_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="grant_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="fk_batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="fk_car_model_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="car_model_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, aid_ref, mobile, vin, dealer_code, grant_count, fk_batch_id, fk_car_model_id,
+    car_model_name, status, create_time, update_time, deleted, active
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from voucher_batch_dealer_grant_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from voucher_batch_dealer_grant_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherBatchDealerGrantRecord" useGeneratedKeys="true">
+    insert into voucher_batch_dealer_grant_record (aid_ref, mobile, vin,
+      dealer_code, grant_count, fk_batch_id,
+      fk_car_model_id, car_model_name, status,
+      create_time, update_time, deleted,
+      active)
+    values (#{aidRef,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR},
+      #{dealerCode,jdbcType=VARCHAR}, #{grantCount,jdbcType=INTEGER}, #{fkBatchId,jdbcType=INTEGER},
+      #{fkCarModelId,jdbcType=INTEGER}, #{carModelName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT},
+      #{active,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherBatchDealerGrantRecord" useGeneratedKeys="true">
+        insert into voucher_batch_dealer_grant_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aidRef != null">
+                aid_ref,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="vin != null">
+                vin,
+            </if>
+            <if test="dealerCode != null">
+                dealer_code,
+            </if>
+            <if test="grantCount != null">
+                grant_count,
+            </if>
+            <if test="fkBatchId != null">
+                fk_batch_id,
+            </if>
+            <if test="fkCarModelId != null">
+                fk_car_model_id,
+            </if>
+            <if test="carModelName != null">
+                car_model_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="active != null">
+                active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="aidRef != null">
+                #{aidRef,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="vin != null">
+                #{vin,jdbcType=VARCHAR},
+            </if>
+            <if test="dealerCode != null">
+                #{dealerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="grantCount != null">
+                #{grantCount,jdbcType=INTEGER},
+            </if>
+            <if test="fkBatchId != null">
+                #{fkBatchId,jdbcType=INTEGER},
+            </if>
+            <if test="fkCarModelId != null">
+                #{fkCarModelId,jdbcType=INTEGER},
+            </if>
+            <if test="carModelName != null">
+                #{carModelName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherBatchDealerGrantRecord">
+        update voucher_batch_dealer_grant_record
+        <set>
+            <if test="aidRef != null">
+                aid_ref = #{aidRef,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="vin != null">
+                vin = #{vin,jdbcType=VARCHAR},
+            </if>
+            <if test="dealerCode != null">
+                dealer_code = #{dealerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="grantCount != null">
+                grant_count = #{grantCount,jdbcType=INTEGER},
+            </if>
+            <if test="fkBatchId != null">
+                fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+            </if>
+            <if test="fkCarModelId != null">
+                fk_car_model_id = #{fkCarModelId,jdbcType=INTEGER},
+            </if>
+            <if test="carModelName != null">
+                car_model_name = #{carModelName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherBatchDealerGrantRecord">
+    update voucher_batch_dealer_grant_record
+    set aid_ref = #{aidRef,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      dealer_code = #{dealerCode,jdbcType=VARCHAR},
+      grant_count = #{grantCount,jdbcType=INTEGER},
+      fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      fk_car_model_id = #{fkCarModelId,jdbcType=INTEGER},
+      car_model_name = #{carModelName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT},
+      active = #{active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

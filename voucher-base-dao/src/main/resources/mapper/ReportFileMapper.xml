@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.ReportFileMapper">
+    <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.ReportFile">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="report_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="extention" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="fk_operation_user_ref_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="file_record_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="file_size" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="query_param" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="export_progress" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, report_name, extention, fk_operation_user_ref_id, file_record_num, file_size,
+    url, query_param, export_progress, create_time, update_time, deleted, active
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from report_file
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from report_file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.ReportFile" useGeneratedKeys="true">
+    insert into report_file (report_name, extention, fk_operation_user_ref_id,
+      file_record_num, file_size, url,
+      query_param, export_progress, create_time,
+      update_time, deleted, active
+      )
+    values (#{reportName,jdbcType=VARCHAR}, #{extention,jdbcType=VARCHAR}, #{fkOperationUserRefId,jdbcType=VARCHAR},
+      #{fileRecordNum,jdbcType=INTEGER}, #{fileSize,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{queryParam,jdbcType=VARCHAR}, #{exportProgress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}, #{active,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.ReportFile" useGeneratedKeys="true">
+        insert into report_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportName != null">
+                report_name,
+            </if>
+            <if test="extention != null">
+                extention,
+            </if>
+            <if test="fkOperationUserRefId != null">
+                fk_operation_user_ref_id,
+            </if>
+            <if test="fileRecordNum != null">
+                file_record_num,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="queryParam != null">
+                query_param,
+            </if>
+            <if test="exportProgress != null">
+                export_progress,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="active != null">
+                active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportName != null">
+                #{reportName,jdbcType=VARCHAR},
+            </if>
+            <if test="extention != null">
+                #{extention,jdbcType=VARCHAR},
+            </if>
+            <if test="fkOperationUserRefId != null">
+                #{fkOperationUserRefId,jdbcType=VARCHAR},
+            </if>
+            <if test="fileRecordNum != null">
+                #{fileRecordNum,jdbcType=INTEGER},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="queryParam != null">
+                #{queryParam,jdbcType=VARCHAR},
+            </if>
+            <if test="exportProgress != null">
+                #{exportProgress,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.ReportFile">
+        update report_file
+        <set>
+            <if test="reportName != null">
+                report_name = #{reportName,jdbcType=VARCHAR},
+            </if>
+            <if test="extention != null">
+                extention = #{extention,jdbcType=VARCHAR},
+            </if>
+            <if test="fkOperationUserRefId != null">
+                fk_operation_user_ref_id = #{fkOperationUserRefId,jdbcType=VARCHAR},
+            </if>
+            <if test="fileRecordNum != null">
+                file_record_num = #{fileRecordNum,jdbcType=INTEGER},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="queryParam != null">
+                query_param = #{queryParam,jdbcType=VARCHAR},
+            </if>
+            <if test="exportProgress != null">
+                export_progress = #{exportProgress,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.ReportFile">
+    update report_file
+    set report_name = #{reportName,jdbcType=VARCHAR},
+      extention = #{extention,jdbcType=VARCHAR},
+      fk_operation_user_ref_id = #{fkOperationUserRefId,jdbcType=VARCHAR},
+      file_record_num = #{fileRecordNum,jdbcType=INTEGER},
+      file_size = #{fileSize,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      query_param = #{queryParam,jdbcType=VARCHAR},
+      export_progress = #{exportProgress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT},
+      active = #{active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 驱动程序(在classpath中已存在驱动的情况下不需要) -->
+    <classPathEntry location="D:\maven-voucher-repo\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.20.14.13:3306/voucher"
+                        userId="root"
+                        password="Cdp@123@mysql" />
+        <!--允许数值类型转换成不同类型,否则都映射为BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- cms为工程名 -->
+        <!-- com.cms.admin.model为javabean存放目录 -->
+        <!-- 模型文件 -->
+        <javaModelGenerator targetPackage="com.fawvw.ms.voucher.basedao.model"
+                            targetProject="D:\mybatis\code_gen">
+
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+
+        </javaModelGenerator>
+        <!-- XML映射文件 -->
+        <!-- com.cms.admin.xml为SQL配置存放目录 -->
+        <sqlMapGenerator targetPackage="com.fawvw.ms.voucher.basedao.mybatis.mapper"
+                         targetProject="D:\mybatis\code_gen">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- DAO文件(mapper接口) -->
+        <!-- com.cms.admin.mapper为SQL对应接口存入目录 -->
+        <javaClientGenerator targetPackage="com.fawvw.ms.voucher.basedao.mapper"
+                             type="XMLMAPPER"	targetProject="D:\mybatis\code_gen">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 数据库表 -->
+        <!-- 可以一次性配置多个表处理 -->
+        <!-- 后面发现去掉table中的schema属性就可以了.. 经测试,如果数据库用的是Oracle,SqlServer需要去掉schema属性,MySQL则不需要去掉-->
+
+<!--        <table tableName="deal_record" domainObjectName="DealRecord"-->
+<!--          enableCountByExample="false" enableUpdateByExample="false"-->
+<!--          enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--          selectByExampleQueryId="false">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+
+        <table tableName="intention_sale" domainObjectName="IntentionSale"
+          enableCountByExample="false" enableUpdateByExample="false"
+          enableDeleteByExample="false" enableSelectByExample="false"
+          selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+<!--        <table tableName="mission" domainObjectName="Mission"-->
+<!--          enableCountByExample="false" enableUpdateByExample="false"-->
+<!--          enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--          selectByExampleQueryId="false">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="mission_salesperson_mapping" domainObjectName="MissionSalespersonMapping"-->
+<!--          enableCountByExample="false" enableUpdateByExample="false"-->
+<!--          enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--          selectByExampleQueryId="false">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+
+        <table tableName="sales_lead_new" domainObjectName="SalesLeadNew"
+          enableCountByExample="false" enableUpdateByExample="false"
+          enableDeleteByExample="false" enableSelectByExample="false"
+          selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+<!--        <table tableName="salesperson" domainObjectName="Salesperson"-->
+<!--          enableCountByExample="false" enableUpdateByExample="false"-->
+<!--          enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--          selectByExampleQueryId="false">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
+
+
+    </context>
+</generatorConfiguration>

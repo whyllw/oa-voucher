@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.OemVoucherSelectGrantTriggerMapper">
+    <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.OemVoucherSelectGrantTrigger">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="grant_limit_per_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="vehicle_binding_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="to_all_make" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="to_all_car_number" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="vehicle_sale_start_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="vehicle_sale_end_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="last_back_to_dealer_start_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="last_back_dealer_end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="last_back_dealer_mileage_min" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="last_back_dealer_mileage_max" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="voucher_received_message_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="app_message_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="pop_up_message_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="sms_notice" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, grant_limit_per_time, vehicle_binding_status, to_all_make, to_all_car_number,
+    vehicle_sale_start_date, vehicle_sale_end_date, last_back_to_dealer_start_time, last_back_dealer_end_time,
+    last_back_dealer_mileage_min, last_back_dealer_mileage_max, voucher_received_message_content,
+    app_message_notice, pop_up_message_notice, sms_notice, deleted, active, create_time,
+    update_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from oem_voucher_select_grant_trigger
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oem_voucher_select_grant_trigger
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherSelectGrantTrigger" useGeneratedKeys="true">
+    insert into oem_voucher_select_grant_trigger (grant_limit_per_time, vehicle_binding_status,
+      to_all_make, to_all_car_number, vehicle_sale_start_date,
+      vehicle_sale_end_date, last_back_to_dealer_start_time,
+      last_back_dealer_end_time, last_back_dealer_mileage_min,
+      last_back_dealer_mileage_max, voucher_received_message_content,
+      app_message_notice, pop_up_message_notice, sms_notice,
+      deleted, active, create_time,
+      update_time)
+    values (#{grantLimitPerTime,jdbcType=INTEGER}, #{vehicleBindingStatus,jdbcType=TINYINT},
+      #{toAllMake,jdbcType=TINYINT}, #{toAllCarNumber,jdbcType=TINYINT}, #{vehicleSaleStartDate,jdbcType=TIMESTAMP},
+      #{vehicleSaleEndDate,jdbcType=TIMESTAMP}, #{lastBackToDealerStartTime,jdbcType=TIMESTAMP},
+      #{lastBackDealerEndTime,jdbcType=TIMESTAMP}, #{lastBackDealerMileageMin,jdbcType=INTEGER},
+      #{lastBackDealerMileageMax,jdbcType=INTEGER}, #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+      #{appMessageNotice,jdbcType=TINYINT}, #{popUpMessageNotice,jdbcType=TINYINT}, #{smsNotice,jdbcType=TINYINT},
+      #{deleted,jdbcType=TINYINT}, #{active,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherSelectGrantTrigger" useGeneratedKeys="true">
+        insert into oem_voucher_select_grant_trigger
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grantLimitPerTime != null">
+                grant_limit_per_time,
+            </if>
+            <if test="vehicleBindingStatus != null">
+                vehicle_binding_status,
+            </if>
+            <if test="toAllMake != null">
+                to_all_make,
+            </if>
+            <if test="toAllCarNumber != null">
+                to_all_car_number,
+            </if>
+            <if test="vehicleSaleStartDate != null">
+                vehicle_sale_start_date,
+            </if>
+            <if test="vehicleSaleEndDate != null">
+                vehicle_sale_end_date,
+            </if>
+            <if test="lastBackToDealerStartTime != null">
+                last_back_to_dealer_start_time,
+            </if>
+            <if test="lastBackDealerEndTime != null">
+                last_back_dealer_end_time,
+            </if>
+            <if test="lastBackDealerMileageMin != null">
+                last_back_dealer_mileage_min,
+            </if>
+            <if test="lastBackDealerMileageMax != null">
+                last_back_dealer_mileage_max,
+            </if>
+            <if test="voucherReceivedMessageContent != null">
+                voucher_received_message_content,
+            </if>
+            <if test="appMessageNotice != null">
+                app_message_notice,
+            </if>
+            <if test="popUpMessageNotice != null">
+                pop_up_message_notice,
+            </if>
+            <if test="smsNotice != null">
+                sms_notice,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="active != null">
+                active,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grantLimitPerTime != null">
+                #{grantLimitPerTime,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleBindingStatus != null">
+                #{vehicleBindingStatus,jdbcType=TINYINT},
+            </if>
+            <if test="toAllMake != null">
+                #{toAllMake,jdbcType=TINYINT},
+            </if>
+            <if test="toAllCarNumber != null">
+                #{toAllCarNumber,jdbcType=TINYINT},
+            </if>
+            <if test="vehicleSaleStartDate != null">
+                #{vehicleSaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="vehicleSaleEndDate != null">
+                #{vehicleSaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackToDealerStartTime != null">
+                #{lastBackToDealerStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackDealerEndTime != null">
+                #{lastBackDealerEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackDealerMileageMin != null">
+                #{lastBackDealerMileageMin,jdbcType=INTEGER},
+            </if>
+            <if test="lastBackDealerMileageMax != null">
+                #{lastBackDealerMileageMax,jdbcType=INTEGER},
+            </if>
+            <if test="voucherReceivedMessageContent != null">
+                #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="appMessageNotice != null">
+                #{appMessageNotice,jdbcType=TINYINT},
+            </if>
+            <if test="popUpMessageNotice != null">
+                #{popUpMessageNotice,jdbcType=TINYINT},
+            </if>
+            <if test="smsNotice != null">
+                #{smsNotice,jdbcType=TINYINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherSelectGrantTrigger">
+        update oem_voucher_select_grant_trigger
+        <set>
+            <if test="grantLimitPerTime != null">
+                grant_limit_per_time = #{grantLimitPerTime,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleBindingStatus != null">
+                vehicle_binding_status = #{vehicleBindingStatus,jdbcType=TINYINT},
+            </if>
+            <if test="toAllMake != null">
+                to_all_make = #{toAllMake,jdbcType=TINYINT},
+            </if>
+            <if test="toAllCarNumber != null">
+                to_all_car_number = #{toAllCarNumber,jdbcType=TINYINT},
+            </if>
+            <if test="vehicleSaleStartDate != null">
+                vehicle_sale_start_date = #{vehicleSaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="vehicleSaleEndDate != null">
+                vehicle_sale_end_date = #{vehicleSaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackToDealerStartTime != null">
+                last_back_to_dealer_start_time = #{lastBackToDealerStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackDealerEndTime != null">
+                last_back_dealer_end_time = #{lastBackDealerEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastBackDealerMileageMin != null">
+                last_back_dealer_mileage_min = #{lastBackDealerMileageMin,jdbcType=INTEGER},
+            </if>
+            <if test="lastBackDealerMileageMax != null">
+                last_back_dealer_mileage_max = #{lastBackDealerMileageMax,jdbcType=INTEGER},
+            </if>
+            <if test="voucherReceivedMessageContent != null">
+                voucher_received_message_content = #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="appMessageNotice != null">
+                app_message_notice = #{appMessageNotice,jdbcType=TINYINT},
+            </if>
+            <if test="popUpMessageNotice != null">
+                pop_up_message_notice = #{popUpMessageNotice,jdbcType=TINYINT},
+            </if>
+            <if test="smsNotice != null">
+                sms_notice = #{smsNotice,jdbcType=TINYINT},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.OemVoucherSelectGrantTrigger">
+    update oem_voucher_select_grant_trigger
+    set grant_limit_per_time = #{grantLimitPerTime,jdbcType=INTEGER},
+      vehicle_binding_status = #{vehicleBindingStatus,jdbcType=TINYINT},
+      to_all_make = #{toAllMake,jdbcType=TINYINT},
+      to_all_car_number = #{toAllCarNumber,jdbcType=TINYINT},
+      vehicle_sale_start_date = #{vehicleSaleStartDate,jdbcType=TIMESTAMP},
+      vehicle_sale_end_date = #{vehicleSaleEndDate,jdbcType=TIMESTAMP},
+      last_back_to_dealer_start_time = #{lastBackToDealerStartTime,jdbcType=TIMESTAMP},
+      last_back_dealer_end_time = #{lastBackDealerEndTime,jdbcType=TIMESTAMP},
+      last_back_dealer_mileage_min = #{lastBackDealerMileageMin,jdbcType=INTEGER},
+      last_back_dealer_mileage_max = #{lastBackDealerMileageMax,jdbcType=INTEGER},
+      voucher_received_message_content = #{voucherReceivedMessageContent,jdbcType=VARCHAR},
+      app_message_notice = #{appMessageNotice,jdbcType=TINYINT},
+      pop_up_message_notice = #{popUpMessageNotice,jdbcType=TINYINT},
+      sms_notice = #{smsNotice,jdbcType=TINYINT},
+      deleted = #{deleted,jdbcType=TINYINT},
+      active = #{active,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

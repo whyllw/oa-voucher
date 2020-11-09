@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreOemVoucherBatchTriggerMappingMapper">
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT
+	        COUNT(1)
+        FROM
+	        oem_voucher_batch_trigger_mapping m
+        INNER JOIN oem_voucher_grant_trigger t ON m.fk_grant_type_id = t.id
+        WHERE
+	        t.deleted = #{deleted}
+        AND m.fk_batch_id = #{batchId}
+    </select>
+
+    <select id="selectByGrantTypeId" resultType="java.util.Map">
+        SELECT
+        o.fk_grant_type_id as grantTypeId,
+        o.fk_batch_id as batchId,
+        vb.voucher_type as voucherType,
+        vb.voucher_name as voucherName,
+        vb.minimum_spend_amount as minimumSpendAmount,
+        vb.redeem_value as redeemValue
+        FROM
+	        oem_voucher_batch_trigger_mapping o, voucher_batch vb
+        WHERE o.fk_grant_type_id = #{grantTypeId} and o.fk_batch_id = vb.id
+    </select>
+</mapper>

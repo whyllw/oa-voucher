@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.VoucherLimitedDealerMappingMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.VoucherLimitedDealerMapping">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sale_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="service_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="big_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="small_region_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="fk_batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="big_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="small_region_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="is_thirdpart" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="shop_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="shop_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sale_code, service_code, big_region_code, small_region_code, name, fk_batch_id,
+    deleted, create_time, update_time, big_region_name, small_region_name, active, is_thirdpart,
+    city, shop_name, shop_address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from voucher_limited_dealer_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from voucher_limited_dealer_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherLimitedDealerMapping" useGeneratedKeys="true">
+    insert into voucher_limited_dealer_mapping (sale_code, service_code, big_region_code,
+      small_region_code, name, fk_batch_id,
+      deleted, create_time, update_time,
+      big_region_name, small_region_name, active,
+      is_thirdpart, city, shop_name,
+      shop_address)
+    values (#{saleCode,jdbcType=VARCHAR}, #{serviceCode,jdbcType=VARCHAR}, #{bigRegionCode,jdbcType=VARCHAR},
+      #{smallRegionCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{fkBatchId,jdbcType=INTEGER},
+      #{deleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{bigRegionName,jdbcType=VARCHAR}, #{smallRegionName,jdbcType=VARCHAR}, #{active,jdbcType=TINYINT},
+      #{isThirdpart,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR},
+      #{shopAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherLimitedDealerMapping" useGeneratedKeys="true">
+    insert into voucher_limited_dealer_mapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleCode != null">
+        sale_code,
+      </if>
+      <if test="serviceCode != null">
+        service_code,
+      </if>
+      <if test="bigRegionCode != null">
+        big_region_code,
+      </if>
+      <if test="smallRegionCode != null">
+        small_region_code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fkBatchId != null">
+        fk_batch_id,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="bigRegionName != null">
+        big_region_name,
+      </if>
+      <if test="smallRegionName != null">
+        small_region_name,
+      </if>
+      <if test="active != null">
+        active,
+      </if>
+      <if test="isThirdpart != null">
+        is_thirdpart,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopAddress != null">
+        shop_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleCode != null">
+        #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bigRegionCode != null">
+        #{bigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smallRegionCode != null">
+        #{smallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fkBatchId != null">
+        #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bigRegionName != null">
+        #{bigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="smallRegionName != null">
+        #{smallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=TINYINT},
+      </if>
+      <if test="isThirdpart != null">
+        #{isThirdpart,jdbcType=TINYINT},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherLimitedDealerMapping">
+    update voucher_limited_dealer_mapping
+    <set>
+      <if test="saleCode != null">
+        sale_code = #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bigRegionCode != null">
+        big_region_code = #{bigRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smallRegionCode != null">
+        small_region_code = #{smallRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fkBatchId != null">
+        fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bigRegionName != null">
+        big_region_name = #{bigRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="smallRegionName != null">
+        small_region_name = #{smallRegionName,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=TINYINT},
+      </if>
+      <if test="isThirdpart != null">
+        is_thirdpart = #{isThirdpart,jdbcType=TINYINT},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.VoucherLimitedDealerMapping">
+    update voucher_limited_dealer_mapping
+    set sale_code = #{saleCode,jdbcType=VARCHAR},
+      service_code = #{serviceCode,jdbcType=VARCHAR},
+      big_region_code = #{bigRegionCode,jdbcType=VARCHAR},
+      small_region_code = #{smallRegionCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      big_region_name = #{bigRegionName,jdbcType=VARCHAR},
+      small_region_name = #{smallRegionName,jdbcType=VARCHAR},
+      active = #{active,jdbcType=TINYINT},
+      is_thirdpart = #{isThirdpart,jdbcType=TINYINT},
+      city = #{city,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

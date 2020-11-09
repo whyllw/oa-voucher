@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.EtlUserVehicleMappingMapper">
+  <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.EtlUserVehicleMapping">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="aid_ref" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="make_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="make_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="vin" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="car_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="vehicle_sale_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="last_back_store_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="last_back_store_mileage" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="vehicle_binding_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, aid_ref, make_id, make_name, mobile, vin, car_number, vehicle_sale_date, last_back_store_time, 
+    last_back_store_mileage, vehicle_binding_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from etl_user_vehicle_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from etl_user_vehicle_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVehicleMapping" useGeneratedKeys="true">
+    insert into etl_user_vehicle_mapping (aid_ref, make_id, make_name, 
+      mobile, vin, car_number, 
+      vehicle_sale_date, last_back_store_time, 
+      last_back_store_mileage, vehicle_binding_status
+      )
+    values (#{aidRef,jdbcType=VARCHAR}, #{makeId,jdbcType=INTEGER}, #{makeName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, 
+      #{vehicleSaleDate,jdbcType=TIMESTAMP}, #{lastBackStoreTime,jdbcType=TIMESTAMP}, 
+      #{lastBackStoreMileage,jdbcType=INTEGER}, #{vehicleBindingStatus,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVehicleMapping" useGeneratedKeys="true">
+    insert into etl_user_vehicle_mapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aidRef != null">
+        aid_ref,
+      </if>
+      <if test="makeId != null">
+        make_id,
+      </if>
+      <if test="makeName != null">
+        make_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="carNumber != null">
+        car_number,
+      </if>
+      <if test="vehicleSaleDate != null">
+        vehicle_sale_date,
+      </if>
+      <if test="lastBackStoreTime != null">
+        last_back_store_time,
+      </if>
+      <if test="lastBackStoreMileage != null">
+        last_back_store_mileage,
+      </if>
+      <if test="vehicleBindingStatus != null">
+        vehicle_binding_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aidRef != null">
+        #{aidRef,jdbcType=VARCHAR},
+      </if>
+      <if test="makeId != null">
+        #{makeId,jdbcType=INTEGER},
+      </if>
+      <if test="makeName != null">
+        #{makeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSaleDate != null">
+        #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBackStoreTime != null">
+        #{lastBackStoreTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBackStoreMileage != null">
+        #{lastBackStoreMileage,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleBindingStatus != null">
+        #{vehicleBindingStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVehicleMapping">
+    update etl_user_vehicle_mapping
+    <set>
+      <if test="aidRef != null">
+        aid_ref = #{aidRef,jdbcType=VARCHAR},
+      </if>
+      <if test="makeId != null">
+        make_id = #{makeId,jdbcType=INTEGER},
+      </if>
+      <if test="makeName != null">
+        make_name = #{makeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSaleDate != null">
+        vehicle_sale_date = #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBackStoreTime != null">
+        last_back_store_time = #{lastBackStoreTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastBackStoreMileage != null">
+        last_back_store_mileage = #{lastBackStoreMileage,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleBindingStatus != null">
+        vehicle_binding_status = #{vehicleBindingStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.EtlUserVehicleMapping">
+    update etl_user_vehicle_mapping
+    set aid_ref = #{aidRef,jdbcType=VARCHAR},
+      make_id = #{makeId,jdbcType=INTEGER},
+      make_name = #{makeName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      vehicle_sale_date = #{vehicleSaleDate,jdbcType=TIMESTAMP},
+      last_back_store_time = #{lastBackStoreTime,jdbcType=TIMESTAMP},
+      last_back_store_mileage = #{lastBackStoreMileage,jdbcType=INTEGER},
+      vehicle_binding_status = #{vehicleBindingStatus,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

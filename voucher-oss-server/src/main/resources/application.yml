@@ -1,0 +1,63 @@
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: classpath*:com.fawvw.ms.voucher.**.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#logging
+logging:
+  file: /one-app/${spring.application.name}/root.log
+
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+
+
+#pagehelper
+pagehelper:
+  supportMethodsArguments: true
+  reasonable: false
+  returnPageInfo: check
+  helperDialect: mysql
+  params: count=countSql
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+
+tsf:
+  swagger:
+    enabled: false
+
+api:
+  config:
+    version: v1
+
+feign:
+  okhttp:
+     enabled: false
+  httpclient:
+     enabled: true
+     maxConnections: 20480
+     maxConnectionsPerRoute: 512
+     timeToLive: 60
+     connectionTimeout: 10000
+  hystrix:
+     enabled: false
+
+  threadpool:
+     default:
+        coreSize: 40
+        maximumSize: 100
+        maxQueueSize: 100

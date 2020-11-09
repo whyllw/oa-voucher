@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.oss.mapper.OssOemVoucherGrantTriggerMapper">
+
+    <select id="selectByBusinessType" resultType="java.util.Map">
+        SELECT
+        g.id as grantTypeId,
+        g.grant_type as grantType,
+        g.grant_limit_per_time AS grantLimitPerTime,
+        g.grant_times_limit AS grantTimesLimit,
+        b.id as batchId,
+        b.voucher_template_id AS generateId,
+        DATE_FORMAT(b.redeem_start_time,'%Y-%m-%d %H:%i:%s') AS startTime,
+        DATE_FORMAT(b.redeem_end_time,'%Y-%m-%d %H:%i:%s') AS endTime,
+        b.business_type AS businessType,
+        b.business_type_option as businessTypeOption,
+        b.expiry_date_type AS expiryDateType,
+        b.valid_for_number_of_days AS validForNumberOfDays,
+        b.voucher_name AS voucherName,
+        b.redeem_value AS redeemValue,
+        b.usage_rule AS usageRule,
+        b.voucher_type AS voucherType,
+        b.minimum_spend_amount AS minimumSpendAmount,
+        b.is_vin_limited AS isVinLimited,
+        g.grant_time_type AS grantTimeType,
+        g.business_type AS grantBusinessType
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        LEFT JOIN voucher_batch b ON m.fk_batch_id = b.id
+        <where>
+            b.status = #{status}
+            <if test="businessType != null">
+                and g.business_type=#{businessType}
+            </if>
+            <if test="grantType != null">
+                and g.grant_type=#{grantType}
+            </if>
+            <if test="active != null">
+                and g.active=#{active}
+            </if>
+            <if test="deleted != null">
+                and g.deleted=#{deleted}
+            </if>
+            <if test="batchIds != null">
+                and b.id in
+                <foreach close=")" collection="batchIds" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectByGrantTypeId" resultType="java.util.Map">
+        SELECT
+        g.id as grantTypeId,
+        g.grant_type as grantType,
+        g.grant_limit_per_time AS grantLimitPerTime,
+        g.grant_times_limit AS grantTimesLimit,
+        b.id as batchId,
+        b.voucher_template_id AS generateId,
+        DATE_FORMAT(b.redeem_start_time,'%Y-%m-%d %H:%i:%s') AS startTime,
+        DATE_FORMAT(b.redeem_end_time,'%Y-%m-%d %H:%i:%s') AS endTime,
+        b.business_type AS businessType,
+        b.business_type_option as businessTypeOption,
+        b.expiry_date_type AS expiryDateType,
+        b.valid_for_number_of_days AS validForNumberOfDays,
+        b.voucher_name AS voucherName,
+        b.redeem_value AS redeemValue,
+        b.usage_rule AS usageRule,
+        b.voucher_type AS voucherType,
+        b.minimum_spend_amount AS minimumSpendAmount
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        LEFT JOIN voucher_batch b ON m.fk_batch_id = b.id
+        <where>
+            b.status = #{status}
+            <if test="grantType != null">
+                and g.grant_type=#{grantType}
+            </if>
+            <if test="active != null">
+                and g.active=#{active}
+            </if>
+            <if test="deleted != null">
+                and g.deleted=#{deleted}
+            </if>
+            <if test="grantTypeIds != null">
+                and g.id in
+                <foreach close=")" collection="grantTypeIds" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="voucherGrantList" resultType="java.util.Map">
+        SELECT
+        b.id AS batchId,
+        b.voucher_template_id AS voucherTemplateId,
+        b.voucher_name AS voucherName,
+        b.voucher_type AS voucherType,
+        DATE_FORMAT(b.draw_expire_date,'%Y/%m/%d') AS drawExpireDate,
+        b.voucher_count AS voucherCount,
+        DATE_FORMAT(b.redeem_start_time,'%Y/%m/%d') AS redeemStartTime,
+        DATE_FORMAT(b.redeem_end_time,'%Y/%m/%d') AS redeemEndTime,
+        IFNULL(b.valid_for_number_of_days, 0) AS validForNumberOfDays,
+        b.usage_rule AS usageRule,
+        b.is_dealer_limited AS isDealerLimited,
+        b.expiry_date_type AS expiryDateType,
+        b.business_type AS businessType,
+        b.business_type_option AS businessTypeOption,
+        b.redeem_value AS redeemValue,
+        g.id as grantTypeId,
+        g.pop_up_message_notice as popUpMessageNotice,
+        b.is_vin_limited AS isVinLimited,
+        g.grant_limit_per_time AS granLimitPerTime,
+        b.minimum_spend_amount AS minimumSpendAmount,
+        b.is_part_code_limited AS isPartCodeLimited,
+        b.redeem_type AS redeemType,
+        b.status AS batchStatus,
+        b.thirdpart_shop_name AS shopName,
+        b.logo_url AS logoUrl,
+        b.shop_url AS shopUrl
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        LEFT JOIN voucher_batch b ON m.fk_batch_id = b.id
+        where
+        g.grant_type=#{grantType}
+        and b.status in
+        <foreach close=")" collection="statusList" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+        and g.active=#{active}
+        and g.deleted=#{deleted}
+        <if test="createTime !=null ">
+            and <![CDATA[ b.update_time > #{createTime} ]]>
+        </if>
+        <if test="redeemChannel !=null ">
+            and b.redeem_channel = #{redeemChannel}
+        </if>
+    </select>
+    <select id="countBusinessType" resultType="java.lang.Integer">
+        SELECT
+        COUNT(gt.id)
+        FROM
+        oem_voucher_grant_trigger AS gt
+        LEFT JOIN oem_voucher_batch_trigger_mapping AS m ON gt.id = m.fk_grant_type_id
+        INNER JOIN voucher_batch AS b ON m.fk_batch_id = b.id
+        <where>
+            b.`status` = #{status} and gt.active = #{active}
+            and gt.deleted = #{deleted} and  <![CDATA[ b.draw_expire_date >=NOW() ]]>
+            <if test="businessType != null">
+                and gt.business_type = #{businessType}
+            </if>
+            <if test="grantType !=null">
+                AND gt.grant_type = #{grantType}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByBatchId" resultType="java.util.Map">
+        SELECT
+        m.fk_batch_id as batchId,
+        g.id as grantTypeId,
+        g.grant_type as grantType,
+        g.business_type as grantBusinessType,
+        g.grant_limit_per_time as grantLimitPerTime,
+        g.grant_times_limit as grantTimesLimit,
+        g.grant_time_type as grantTimeType
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        <where>
+            g.deleted = 0
+            and m.fk_batch_id = #{batchId}
+        </where>
+    </select>
+
+    <select id="selectDirectingGrantResults" resultType="java.util.Map">
+        SELECT
+        g.id as id,
+        g.import_type as importType,
+        g.import_num as importNum,
+        g.create_time as importTime,
+        g.active as isGrant,
+        g.app_message_notice as appMessageNotice,
+        g.sms_notice as smsNotice,
+        g.pop_up_message_notice as popUpMessageNotice,
+        b.batch_code as batchCode,
+        b.id as batchId,
+        b.voucher_name as voucherName
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        LEFT JOIN voucher_batch b ON m.fk_batch_id = b.id
+        <where>
+            g.deleted = 0 and g.grant_type = 5
+            <if test="importType !=null ">
+                and g.import_type = #{importType}
+            </if>
+            <if test="isGrant !=null ">
+                and g.active = #{isGrant}
+            </if>
+            <if test="importStartTime != null and importEndTime != null">
+                and <![CDATA[ UNIX_TIMESTAMP(g.create_time) >= #{importStartTime} ]]>
+                and <![CDATA[ UNIX_TIMESTAMP(g.create_time) <= #{importEndTime} ]]>
+            </if>
+        </where>
+    </select>
+    <select id="selectByQueryParam" resultType="java.util.Map">
+        SELECT
+        g.id as grantTypeId,
+        g.grant_type as grantType,
+        g.grant_limit_per_time AS grantLimitPerTime,
+        g.grant_times_limit AS grantTimesLimit,
+        g.business_type AS businessType,
+        m.fk_batch_id as batchId
+        FROM
+        oem_voucher_grant_trigger g
+        LEFT JOIN oem_voucher_batch_trigger_mapping m ON g.id = m.fk_grant_type_id
+        <where>
+            g.active=1 and g.deleted=0
+            <if test="businessType != null">
+                and g.business_type=#{businessType}
+            </if>
+            <if test="grantType != null">
+                and g.grant_type=#{grantType}
+            </if>
+            <if test="batchIds != null">
+                and m.fk_batch_id in
+                <foreach close=")" collection="batchIds" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

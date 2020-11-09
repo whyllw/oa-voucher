@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.basedao.mapper.ThirdpartVoucherMappingMapper">
+    <resultMap id="BaseResultMap" type="com.fawvw.ms.voucher.basedao.model.ThirdpartVoucherMapping">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="redeem_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="code_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="import_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="fail_reason" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="fk_batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="deleted" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="active" javaType="java.lang.Byte" jdbcType="TINYINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, redeem_code, code_type, import_status, fail_reason, fk_batch_id, deleted, create_time,
+    update_time, active
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from thirdpart_voucher_mapping
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from thirdpart_voucher_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.ThirdpartVoucherMapping" useGeneratedKeys="true">
+    insert into thirdpart_voucher_mapping (redeem_code, code_type, import_status,
+      fail_reason, fk_batch_id, deleted,
+      create_time, update_time, active
+      )
+    values (#{redeemCode,jdbcType=VARCHAR}, #{codeType,jdbcType=TINYINT}, #{importStatus,jdbcType=TINYINT},
+      #{failReason,jdbcType=VARCHAR}, #{fkBatchId,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{active,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fawvw.ms.voucher.basedao.model.ThirdpartVoucherMapping" useGeneratedKeys="true">
+        insert into thirdpart_voucher_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="redeemCode != null">
+                redeem_code,
+            </if>
+            <if test="codeType != null">
+                code_type,
+            </if>
+            <if test="importStatus != null">
+                import_status,
+            </if>
+            <if test="failReason != null">
+                fail_reason,
+            </if>
+            <if test="fkBatchId != null">
+                fk_batch_id,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="active != null">
+                active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="redeemCode != null">
+                #{redeemCode,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                #{codeType,jdbcType=TINYINT},
+            </if>
+            <if test="importStatus != null">
+                #{importStatus,jdbcType=TINYINT},
+            </if>
+            <if test="failReason != null">
+                #{failReason,jdbcType=VARCHAR},
+            </if>
+            <if test="fkBatchId != null">
+                #{fkBatchId,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fawvw.ms.voucher.basedao.model.ThirdpartVoucherMapping">
+        update thirdpart_voucher_mapping
+        <set>
+            <if test="redeemCode != null">
+                redeem_code = #{redeemCode,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                code_type = #{codeType,jdbcType=TINYINT},
+            </if>
+            <if test="importStatus != null">
+                import_status = #{importStatus,jdbcType=TINYINT},
+            </if>
+            <if test="failReason != null">
+                fail_reason = #{failReason,jdbcType=VARCHAR},
+            </if>
+            <if test="fkBatchId != null">
+                fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fawvw.ms.voucher.basedao.model.ThirdpartVoucherMapping">
+    update thirdpart_voucher_mapping
+    set redeem_code = #{redeemCode,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=TINYINT},
+      import_status = #{importStatus,jdbcType=TINYINT},
+      fail_reason = #{failReason,jdbcType=VARCHAR},
+      fk_batch_id = #{fkBatchId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      active = #{active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

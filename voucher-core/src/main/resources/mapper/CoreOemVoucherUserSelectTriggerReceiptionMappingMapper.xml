@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fawvw.ms.voucher.core.mapper.CoreOemVoucherUserSelectTriggerReceiptionMappingMapper">
+    <select id="selectByGrantIdAndUserId" resultMap="com.fawvw.ms.voucher.basedao.mapper.OemVoucherUserSelectTriggerReceiptionMappingMapper.BaseResultMap">
+        SELECT
+        <include refid="com.fawvw.ms.voucher.basedao.mapper.OemVoucherUserSelectTriggerReceiptionMappingMapper.Base_Column_List" />
+        FROM
+        oem_voucher_user_select_trigger_receiption_mapping m
+        WHERE
+        m.aid_ref = #{refId} and m.fk_select_grant_id = #{grantTypeId}
+        and m.fk_batch_id = #{batchId}
+        <if test="vin != null and vin != ''">
+            and m.vin = #{vin}
+        </if>
+        LIMIT 1
+    </select>
+</mapper>
